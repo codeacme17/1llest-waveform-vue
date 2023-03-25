@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { ref, onMounted, unref, watchEffect, onUnmounted } from 'vue'
-import WebAudioController from '../modules/web-audio/controller'
-import Wave from '../modules/wave/index'
-import WaveMask from '../modules/wave/mask'
+import { ref, onMounted, unref, watchEffect, onUnmounted } from "vue"
+import WebAudioController from "../modules/WebAudio/Controller"
+import Wave from "../modules/Wave/index"
+import WaveMask from "../modules/Wave/WaveMask"
 import {
   lazyLoader,
   registerScrollHander,
   canelScrollHander,
-} from '../utils/lazy-load'
+} from "../utils/lazy-load"
 
 type IllGWaveformProps = {
   url: string
@@ -23,16 +23,16 @@ type IllGWaveformProps = {
 
 const props = withDefaults(defineProps<IllGWaveformProps>(), {
   lineWidth: 2,
-  lineCap: 'round',
-  lineStyle: '#2e2e2e',
+  lineCap: "round",
+  lineStyle: "#2e2e2e",
   cursorWidth: 2,
-  cursorColor: '#fff',
+  cursorColor: "#fff",
   samplingRate: 2215,
-  maskColor: '#fff',
+  maskColor: "#fff",
   lazy: true,
 })
 
-const emits = defineEmits(['onPlay', 'onPause', 'onFinish', 'onReady'])
+const emits = defineEmits(["onPlay", "onPause", "onFinish", "onReady"])
 
 // Render trigger can control the render time
 // of current waveform
@@ -64,8 +64,8 @@ async function initWaveform(): Promise<string> {
   initWave()
   initWaveMask()
   ready.value = true
-  emits('onReady', ready.value)
-  return Promise.resolve('finish init waveform')
+  emits("onReady", ready.value)
+  return Promise.resolve("finish init waveform")
 }
 
 // initialize web audio
@@ -75,7 +75,7 @@ async function initAudio(): Promise<string> {
   webAudioController = new WebAudioController(props)
   await webAudioController.setupAudio()
   watchIsFinish()
-  return Promise.resolve('finish init audio')
+  return Promise.resolve("finish init audio")
 }
 
 // initialize wave canvas
@@ -89,7 +89,7 @@ async function initWave(): Promise<string> {
     wave._props = props
     wave.setCanvasStyle()
   })
-  return Promise.resolve('finish init audio')
+  return Promise.resolve("finish init audio")
 }
 
 // initialize wave mask canvas
@@ -113,24 +113,24 @@ async function initWaveMask(): Promise<void> {
 // Audio handlers
 function play(): void {
   webAudioController.play()
-  emits('onPlay', true)
+  emits("onPlay", true)
   drawWaveMask()
 }
 
 function replay(): void {
   webAudioController.replay()
-  emits('onFinish', false)
-  emits('onPlay', true)
+  emits("onFinish", false)
+  emits("onPlay", true)
   drawWaveMask()
 }
 
 function pause(): void {
   webAudioController.pause()
-  emits('onPause', false)
+  emits("onPause", false)
 }
 
 function finish(): void {
-  emits('onFinish', true)
+  emits("onFinish", true)
 }
 
 function watchIsFinish(): void {
@@ -166,7 +166,7 @@ function clickHandler(): void {
   const pickedTime: number =
     (moveX.value / wave._canvas!.width) * webAudioController._audioDuration
   webAudioController.pick(pickedTime)
-  emits('onFinish', false)
+  emits("onFinish", false)
 }
 
 defineExpose({
