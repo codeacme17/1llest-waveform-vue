@@ -4,12 +4,6 @@ import type { IllestWaveformProps } from '../../types/waveform'
  *  The WebAudio class creates a playable audio instance
  *  and converts the audio into an array for visual processing
  *
- *  @states
- *  - props : The configs of web-audio
- *  - audioCtx : *https://developer.mozilla.org/en-US/docs/Web/API/AudioContext*
- *  - audioBuffer : *https://developer.mozilla.org/en-US/docs/Web/API/AudioBuffer*
- *  - audioBufferSourceNode : *https://developer.mozilla.org/en-US/docs/Web/API/AudioBufferSourceNode*
- *
  */
 
 export default class WebAudio {

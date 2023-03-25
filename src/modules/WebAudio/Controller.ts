@@ -6,12 +6,6 @@ import type { IllestWaveformProps } from '../../types/waveform'
  *  which can control the web audio behaviors.
  *  It's inheirts from WebAudio Class.
  *
- *  @states
- *  - startAt : The start time of current audio
- *  - pauseAt : When the audio paused
- *  - pickAt : When the user changed the playback position
- *  - playing : Whether to play audio
- *
  */
 
 export default class WebAudioController extends WebAudio {

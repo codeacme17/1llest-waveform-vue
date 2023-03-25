@@ -105,6 +105,7 @@ async function initWave(): Promise<string> {
 // initialize wave mask canvas
 let waveMask: WaveMask
 const maskRef = ref<HTMLCanvasElement | null>(null)
+
 async function initWaveMask(): Promise<void> {
   waveMask = new WaveMask(
     maskRef.value as HTMLCanvasElement,
@@ -198,10 +199,7 @@ defineExpose({
     <div
       v-show="ready"
       id="ill-cursor"
-      :style="`width:${props.cursorWidth}px;
-               transform: translateX(${moveX}px);
-               background-color: ${props.cursorColor};
-               `"
+      :style="`width:${props.cursorWidth}px; transform: translateX(${moveX}px);background-color: ${props.cursorColor};`"
     />
   </section>
 </template>
