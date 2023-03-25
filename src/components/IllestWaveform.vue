@@ -29,12 +29,18 @@ const props = withDefaults(defineProps<IllestWaveformProps>(), {
   lineStyle: '#2e2e2e',
   cursorWidth: 2,
   cursorColor: '#fff',
-  samplingRate: 2215,
+  samplingRate: 1015,
   maskColor: '#fff',
   lazy: true,
 })
 
-const emits = defineEmits(['onPlay', 'onPause', 'onFinish', 'onReady'])
+const emits = defineEmits([
+  'onInit', // start init hook
+  'onReady', // ready to play, rended
+  'onPlay', // start play hook
+  'onPause', // pause hook
+  'onFinish', // finish current track hook
+])
 
 // Render trigger can control the render time
 // of current waveform
@@ -66,6 +72,7 @@ function lazyLoadHandler() {
 // initialize waveform
 const ready = ref<boolean>(false)
 async function initWaveform(): Promise<string> {
+  emits('onInit', true)
   await initAudio()
   initWave()
   initWaveMask()
