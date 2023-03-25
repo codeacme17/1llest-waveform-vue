@@ -8,4 +8,5 @@ export type IllestWaveformProps = {
   cursorColor: string
   maskColor: string
   lazy: boolean
+  skeleton: boolean
 }

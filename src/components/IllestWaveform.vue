@@ -21,6 +21,7 @@ type IllestWaveformProps = {
   cursorColor: string
   maskColor: string
   lazy: boolean
+  skeleton: boolean
 }
 
 const props = withDefaults(defineProps<IllestWaveformProps>(), {
@@ -32,6 +33,7 @@ const props = withDefaults(defineProps<IllestWaveformProps>(), {
   samplingRate: 1050,
   maskColor: '#fff',
   lazy: true,
+  skeleton: true,
 })
 
 const emits = defineEmits([
@@ -129,6 +131,7 @@ async function initWaveMask(): Promise<void> {
 
 // Audio handlers
 function play(): void {
+  if (!ready.value) return
   webAudioController.play()
   emits('onPlay', true)
   drawWaveMask()
@@ -172,10 +175,12 @@ function drawWaveMask(): void | undefined {
 }
 
 function mouseMoveHandler(e: any): void {
+  if (!ready.value) return
   moveX.value = e.layerX
 }
 
 function clickHandler(): void {
+  if (!ready.value) return
   maskWidth.value = moveX.value
   const pickedTime: number =
     (moveX.value / wave._canvas.width) * webAudioController._audioDuration
@@ -194,9 +199,16 @@ defineExpose({
   <section
     id="ill-wave-container"
     ref="waveformContainer"
+    :style="`${!ready ? 'cursor: progress;' : 'cursor: pointer'}`"
     @mousemove="mouseMoveHandler"
     @click="clickHandler"
   >
+    <transition name="fade">
+      <div v-show="props.skeleton && !ready" id="ill-skeleton">
+        <div v-show="!ready" id="ill-skeleton__load" />
+      </div>
+    </transition>
+
     <canvas id="ill-wave" ref="waveRef" />
 
     <div id="ill-waveMask-container" :style="`width:${maskWidth}px;`">
@@ -206,25 +218,48 @@ defineExpose({
     <div
       v-show="ready"
       id="ill-cursor"
-      :style="`width:${props.cursorWidth}px; transform: translateX(${moveX}px);background-color: ${props.cursorColor};`"
+      :style="`width:${props.cursorWidth}px; transform: translateX(${moveX}px);background-color: ${props.cursorColor}; `"
     />
   </section>
 </template>
 
-<style>
+<style scoped>
 #ill-wave-container {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  cursor: pointer;
+}
+
+#ill-wave-container > #ill-skeleton {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #1e1e1e;
+  border-radius: 7px;
+  overflow: hidden;
+  z-index: 0;
+}
+
+#ill-wave-container > #ill-skeleton > #ill-skeleton__load {
+  background-color: #1e1e1e;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.1) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  height: 100%;
+  width: 30%;
+  animation: skeleton-load 2.5s ease 0s infinite;
 }
 
 #ill-wave-container > #ill-wave {
   width: inherit;
   height: inherit;
   opacity: 0;
-  transition: opacity 0.5s ease-in-out;
 }
 
 #ill-wave-container > #ill-waveMask-container {
@@ -245,12 +280,30 @@ defineExpose({
   height: inherit;
   left: 0px;
   top: 0px;
-  cursor: pointer;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
 }
 
 #ill-wave-container:hover #ill-cursor {
   opacity: 1;
+}
+
+@keyframes skeleton-load {
+  from {
+    margin-left: -20%;
+  }
+  to {
+    margin-left: 100%;
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all ease-in-out 0.7s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  transform: translateX(100%);
 }
 </style>
