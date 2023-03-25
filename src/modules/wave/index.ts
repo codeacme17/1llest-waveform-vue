@@ -52,11 +52,11 @@ export default class Wave {
       const x = singleLineWidth * index - singleLineWidth / 2
       canvasCtx.moveTo(
         x,
-        canvas.height / 2 - Math.abs(items[0]) * canvas.height * 2
+        canvas.height / 2 - Math.abs(items[0]) * canvas.height * 0.5
       )
       canvasCtx.lineTo(
         x,
-        canvas.height / 2 + Math.abs(items[0]) * canvas.height * 2
+        canvas.height / 2 + Math.abs(items[0]) * canvas.height * 0.5
       )
     })
   }
