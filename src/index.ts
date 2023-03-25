@@ -1,8 +1,8 @@
 import { App } from 'vue'
-import IllGWaveform from './components/Waveform.vue'
+import IllestWaveform from './components/IllestWaveform.vue'
 
 export default {
   install: (app: App) => {
-    app.component('IllGWaveform', IllGWaveform)
+    app.component('IllestWaveform', IllestWaveform)
   },
 }

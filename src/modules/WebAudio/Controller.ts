@@ -1,5 +1,5 @@
 import WebAudio from './index'
-import type { WaveformProps } from '../../types/waveform'
+import type { IllestWaveformProps } from '../../types/waveform'
 
 /**
  *  WebAudioController Class creates construct,
@@ -20,7 +20,7 @@ export default class WebAudioController extends WebAudio {
   private pickAt: number
   private playing: boolean
 
-  constructor(props: WaveformProps) {
+  constructor(props: IllestWaveformProps) {
     super(props)
     this.startAt = 0
     this.pauseAt = 0
@@ -32,7 +32,7 @@ export default class WebAudioController extends WebAudio {
     return this.playing
   }
 
-  get _currentTime(): number | undefined {
+  get _currentTime(): number {
     if (this.pauseAt) return this.pauseAt
     if (this.startAt) return this.audioCtx.currentTime - this.startAt
     return this.audioCtx.currentTime
@@ -41,7 +41,7 @@ export default class WebAudioController extends WebAudio {
   public play(): void {
     const offset = this.pickAt ? this.pickAt : this.pauseAt
     this.connectDestination()
-    this.audioBufferSourceNode!.start(0, offset)
+    this.audioBufferSourceNode.start(0, offset)
     this.startAt = this.audioCtx.currentTime - offset
     this.pauseAt = 0
     this.playing = true
@@ -74,7 +74,7 @@ export default class WebAudioController extends WebAudio {
 
   private stopSource() {
     this.disconnectDestination()
-    this.audioBufferSourceNode!.stop()
+    this.audioBufferSourceNode.stop()
   }
 
   private initializeState() {

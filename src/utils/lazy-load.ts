@@ -7,9 +7,9 @@ function canelScrollHander(el: HTMLElement, handler: () => void) {
 }
 
 function lazyLoader(el: HTMLElement, handler: () => void): void {
-  let windowHeight: number = window.innerHeight
-  let windowOffY: number = window.scrollY
-  let elDistanceToTop: number =
+  const windowHeight: number = window.innerHeight
+  const windowOffY: number = window.scrollY
+  const elDistanceToTop: number =
     window.pageYOffset + el.getBoundingClientRect().top
 
   if (

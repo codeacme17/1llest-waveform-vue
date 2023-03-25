@@ -1,4 +1,4 @@
-import type { WaveformProps } from "../../types/waveform"
+import type { IllestWaveformProps } from '../../types/waveform'
 
 /**
  *  The WebAudio class creates a playable audio instance
@@ -13,16 +13,14 @@ import type { WaveformProps } from "../../types/waveform"
  */
 
 export default class WebAudio {
-  protected props: WaveformProps
+  protected props: IllestWaveformProps
   protected audioCtx: AudioContext
-  protected audioBuffer: AudioBuffer | null
-  protected audioBufferSourceNode: AudioBufferSourceNode | null
+  protected audioBuffer!: AudioBuffer
+  protected audioBufferSourceNode!: AudioBufferSourceNode
 
-  constructor(props: WaveformProps) {
+  constructor(props: IllestWaveformProps) {
     this.props = props
     this.audioCtx = new AudioContext()
-    this.audioBuffer = null
-    this.audioBufferSourceNode = null
   }
 
   get _filterData(): Promise<number[][]> {
@@ -30,7 +28,7 @@ export default class WebAudio {
   }
 
   get _audioDuration(): number {
-    return this.audioBuffer!.duration
+    return this.audioBuffer.duration
   }
 
   public async setupAudio(): Promise<void> {
@@ -45,16 +43,16 @@ export default class WebAudio {
 
   private createFilterData(): Promise<number[][]> {
     const samplingRate: number | undefined = this.props.samplingRate
-    const channels: number = this.audioBuffer!.numberOfChannels
+    const channels: number = this.audioBuffer.numberOfChannels
     const rawDataList: Float32Array[] = []
     const filteredData: number[][] = []
 
     for (let channel = 0; channel < channels; channel++) {
-      rawDataList.push(this.audioBuffer!.getChannelData(channel))
+      rawDataList.push(this.audioBuffer.getChannelData(channel))
     }
 
     for (let index = 0; index < samplingRate; index++) {
-      let temp = [0, 0]
+      const temp = [0, 0]
       for (let channel = 0; channel < channels; channel++) {
         const blockSize = Math.floor(rawDataList[channel].length / samplingRate)
         temp[channel] = rawDataList[channel][index * blockSize]
@@ -68,7 +66,7 @@ export default class WebAudio {
   protected connectDestination(): void {
     this.createAudioBufferSourceNode()
     this.disconnectDestination()
-    this.audioBufferSourceNode!.connect(this.audioCtx.destination)
+    this.audioBufferSourceNode.connect(this.audioCtx.destination)
   }
 
   private createAudioBufferSourceNode(): void {

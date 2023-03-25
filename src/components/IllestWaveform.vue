@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { ref, onMounted, unref, watchEffect, onUnmounted } from "vue"
-import WebAudioController from "../modules/WebAudio/Controller"
-import Wave from "../modules/Wave/index"
-import WaveMask from "../modules/Wave/WaveMask"
+import { ref, onMounted, watchEffect, onUnmounted } from 'vue'
+import WebAudioController from '../modules/WebAudio/Controller'
+import Wave from '../modules/Wave/index'
+import WaveMask from '../modules/Wave/WaveMask'
 import {
   lazyLoader,
   registerScrollHander,
   canelScrollHander,
-} from "../utils/lazy-load"
+} from '../utils/lazy-load'
 
-type IllGWaveformProps = {
+type CanvasLineCap = 'butt' | 'round' | 'square'
+
+type IllestWaveformProps = {
   url: string
   lineWidth: number
   lineCap: CanvasLineCap
@@ -21,28 +23,31 @@ type IllGWaveformProps = {
   lazy: boolean
 }
 
-const props = withDefaults(defineProps<IllGWaveformProps>(), {
+const props = withDefaults(defineProps<IllestWaveformProps>(), {
   lineWidth: 2,
-  lineCap: "round",
-  lineStyle: "#2e2e2e",
+  lineCap: 'round',
+  lineStyle: '#2e2e2e',
   cursorWidth: 2,
-  cursorColor: "#fff",
+  cursorColor: '#fff',
   samplingRate: 2215,
-  maskColor: "#fff",
+  maskColor: '#fff',
   lazy: true,
 })
 
-const emits = defineEmits(["onPlay", "onPause", "onFinish", "onReady"])
+const emits = defineEmits(['onPlay', 'onPause', 'onFinish', 'onReady'])
 
 // Render trigger can control the render time
 // of current waveform
-let renderTrigger = ref<boolean>(false)
-let waveformContainer = ref<HTMLElement | null>(null)
+const renderTrigger = ref<boolean>(false)
+const waveformContainer = ref<HTMLElement | null>(null)
 
 onMounted(() => {
   if (props.lazy) {
-    lazyLoader(unref(waveformContainer)!, lazyLoadHandler)
-    registerScrollHander(unref(waveformContainer)!, lazyLoadHandler)
+    lazyLoader(waveformContainer.value as HTMLElement, lazyLoadHandler)
+    registerScrollHander(
+      waveformContainer.value as HTMLElement,
+      lazyLoadHandler
+    )
     watchEffect(async () => {
       if (renderTrigger.value) initWaveform()
     })
@@ -50,7 +55,8 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  if (props.lazy) canelScrollHander(unref(waveformContainer)!, lazyLoadHandler)
+  if (props.lazy)
+    canelScrollHander(waveformContainer.value as HTMLElement, lazyLoadHandler)
 })
 
 function lazyLoadHandler() {
@@ -58,14 +64,14 @@ function lazyLoadHandler() {
 }
 
 // initialize waveform
-let ready = ref<boolean>(false)
+const ready = ref<boolean>(false)
 async function initWaveform(): Promise<string> {
   await initAudio()
   initWave()
   initWaveMask()
   ready.value = true
-  emits("onReady", ready.value)
-  return Promise.resolve("finish init waveform")
+  emits('onReady', ready.value)
+  return Promise.resolve('finish init waveform')
 }
 
 // initialize web audio
@@ -75,30 +81,33 @@ async function initAudio(): Promise<string> {
   webAudioController = new WebAudioController(props)
   await webAudioController.setupAudio()
   watchIsFinish()
-  return Promise.resolve("finish init audio")
+  return Promise.resolve('finish init audio')
 }
 
 // initialize wave canvas
 let wave: Wave
-let waveRef = ref<HTMLCanvasElement | null>(null)
+const waveRef = ref<HTMLCanvasElement | null>(null)
 
 async function initWave(): Promise<string> {
-  wave = new Wave(unref(waveRef), props, await webAudioController._filterData)
+  wave = new Wave(
+    waveRef.value as HTMLCanvasElement,
+    props,
+    await webAudioController._filterData
+  )
   wave.setupCanvas()
   watchEffect(() => {
     wave._props = props
     wave.setCanvasStyle()
   })
-  return Promise.resolve("finish init audio")
+  return Promise.resolve('finish init audio')
 }
 
 // initialize wave mask canvas
 let waveMask: WaveMask
-let maskRef = ref<HTMLCanvasElement | null>(null)
-
+const maskRef = ref<HTMLCanvasElement | null>(null)
 async function initWaveMask(): Promise<void> {
   waveMask = new WaveMask(
-    unref(maskRef),
+    maskRef.value as HTMLCanvasElement,
     props,
     await webAudioController._filterData,
     wave._canvas
@@ -113,24 +122,24 @@ async function initWaveMask(): Promise<void> {
 // Audio handlers
 function play(): void {
   webAudioController.play()
-  emits("onPlay", true)
+  emits('onPlay', true)
   drawWaveMask()
 }
 
 function replay(): void {
   webAudioController.replay()
-  emits("onFinish", false)
-  emits("onPlay", true)
+  emits('onFinish', false)
+  emits('onPlay', true)
   drawWaveMask()
 }
 
 function pause(): void {
   webAudioController.pause()
-  emits("onPause", false)
+  emits('onPause', false)
 }
 
 function finish(): void {
-  emits("onFinish", true)
+  emits('onFinish', true)
 }
 
 function watchIsFinish(): void {
@@ -142,31 +151,28 @@ function watchIsFinish(): void {
 }
 
 // Waveform handlers
-let moveX = ref<number>(0)
-let radioX = ref<number>(0)
-let currentTime = ref<number>(0)
-let maskWidth = ref<number>(0)
+const moveX = ref<number>(0)
+const currentTime = ref<number>(0)
+const maskWidth = ref<number>(0)
 
 function drawWaveMask(): void | undefined {
   if (!webAudioController._playing) return
   requestAnimationFrame(drawWaveMask)
-  currentTime.value = webAudioController._currentTime!
+  currentTime.value = webAudioController._currentTime
   maskWidth.value =
-    (currentTime.value / webAudioController._audioDuration) *
-    wave._canvas!.width
+    (currentTime.value / webAudioController._audioDuration) * wave._canvas.width
 }
 
 function mouseMoveHandler(e: any): void {
   moveX.value = e.layerX
-  radioX.value = ((e.layerX / waveRef.value!.width)!.toFixed(2) as any) * 1
 }
 
 function clickHandler(): void {
   maskWidth.value = moveX.value
   const pickedTime: number =
-    (moveX.value / wave._canvas!.width) * webAudioController._audioDuration
+    (moveX.value / wave._canvas.width) * webAudioController._audioDuration
   webAudioController.pick(pickedTime)
-  emits("onFinish", false)
+  emits('onFinish', false)
 }
 
 defineExpose({
@@ -190,8 +196,8 @@ defineExpose({
     </div>
 
     <div
-      id="ill-cursor"
       v-show="ready"
+      id="ill-cursor"
       :style="`width:${props.cursorWidth}px;
                transform: translateX(${moveX}px);
                background-color: ${props.cursorColor};

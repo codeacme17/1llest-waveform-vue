@@ -1,4 +1,4 @@
-export type WaveformProps = {
+export type IllestWaveformProps = {
   url: string
   lineWidth: number
   lineCap: CanvasLineCap
