@@ -1,4 +1,4 @@
-import type { WaveformProps } from '../../types/waveform'
+import type { WaveformProps } from "../../types/waveform"
 
 /**
  *  The WebAudio class creates a playable audio instance
@@ -62,24 +62,6 @@ export default class WebAudio {
       filteredData.push(temp)
     }
 
-    return Promise.resolve(filteredData)
-  }
-
-  private createFilterData(): Promise<number[][]> {
-    const samplingRate = this.props.samplingRate
-    const blockSize = Math.floor(this.audioBuffer!.sampleRate / samplingRate!)
-    const rawData = this.audioBuffer!.getChannelData(0)
-    const filteredData: number[][] = Array(samplingRate!)
-      .fill()
-      .map(() => [0, 0])
-    const filter = new Filter(samplingRate!, blockSize)
-    filter.initialize()
-    for (let i = 0; i < samplingRate!; i++) {
-      const [left, right] = filter.apply(
-        rawData.subarray(i * blockSize, (i + 1) * blockSize)
-      )
-      filteredData[i] = [(left + 1) * 126, (right + 1) * 126]
-    }
     return Promise.resolve(filteredData)
   }
 

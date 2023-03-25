@@ -1,10 +1,10 @@
-import { App } from 'vue'
+import { App } from "vue"
 
 declare const _default: {
   install: (app: App) => void
 }
 
-declare const IllGWaveform: import('vue').DefineComponent<
+declare const IllGWaveform: import("vue").DefineComponent<
   {
     url: {
       type: StringConstructor
@@ -64,31 +64,31 @@ declare const IllGWaveform: import('vue').DefineComponent<
       lazy: boolean
     }
     emits: (
-      event: 'onPlay' | 'onPause' | 'onFinish' | 'onReady',
+      event: "onPlay" | "onPause" | "onFinish" | "onReady",
       ...args: any[]
     ) => void
-    renderTrigger: import('vue').Ref<boolean>
-    waveformContainer: import('vue').Ref<HTMLElement | null>
+    renderTrigger: import("vue").Ref<boolean>
+    waveformContainer: import("vue").Ref<HTMLElement | null>
     lazyLoadHandler: () => void
-    ready: import('vue').Ref<boolean>
+    ready: import("vue").Ref<boolean>
     initWaveform: () => Promise<string>
     webAudioController: WebAudioController
     initAudio: () => Promise<string>
     wave: Wave
-    waveRef: import('vue').Ref<HTMLCanvasElement | null>
+    waveRef: import("vue").Ref<HTMLCanvasElement | null>
     initWave: () => Promise<string>
     waveMask: WaveMask
-    maskRef: import('vue').Ref<HTMLCanvasElement | null>
+    maskRef: import("vue").Ref<HTMLCanvasElement | null>
     initWaveMask: () => Promise<void>
     play: () => void
     replay: () => void
     pause: () => void
     finish: () => void
     watchIsFinish: () => void
-    moveX: import('vue').Ref<number>
-    radioX: import('vue').Ref<number>
-    currentTime: import('vue').Ref<number>
-    maskWidth: import('vue').Ref<number>
+    moveX: import("vue").Ref<number>
+    radioX: import("vue").Ref<number>
+    currentTime: import("vue").Ref<number>
+    maskWidth: import("vue").Ref<number>
     drawWaveMask: () => void | undefined
     mouseMoveHandler: (e: any) => void
     clickHandler: () => void
@@ -96,15 +96,15 @@ declare const IllGWaveform: import('vue').DefineComponent<
   unknown,
   {},
   {},
-  import('vue').ComponentOptionsMixin,
-  import('vue').ComponentOptionsMixin,
-  ('onPlay' | 'onPause' | 'onFinish' | 'onReady')[],
-  'onPlay' | 'onPause' | 'onFinish' | 'onReady',
-  import('vue').VNodeProps &
-    import('vue').AllowedComponentProps &
-    import('vue').ComponentCustomProps,
+  import("vue").ComponentOptionsMixin,
+  import("vue").ComponentOptionsMixin,
+  ("onPlay" | "onPause" | "onFinish" | "onReady")[],
+  "onPlay" | "onPause" | "onFinish" | "onReady",
+  import("vue").VNodeProps &
+    import("vue").AllowedComponentProps &
+    import("vue").ComponentCustomProps,
   Readonly<
-    import('vue').ExtractPropTypes<{
+    import("vue").ExtractPropTypes<{
       url: {
         type: StringConstructor
         required: true

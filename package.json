@@ -1,15 +1,15 @@
 {
-  "name": "illg-waveform-plugin-vue",
+  "name": "1llest-waveform-vue",
   "private": true,
   "version": "0.1.0",
-  "main": "./lib/illg-waveform-plugin-vue.umd.js",
-  "module": "./lib/illg-waveform-plugin-vue.js",
+  "main": "./lib/1llest-waveform-vue.umd.js",
+  "module": "./lib/1llest-waveform-vue.js",
   "types": "./lib/index.d.ts",
   "type": "module",
   "exports": {
     ".": {
-      "import": "./lib/illg-waveform-plugin-vue.js",
-      "require": "./lib/illg-waveform-plugin-vue.umd.js"
+      "import": "./lib/1llest-waveform-vue.js",
+      "require": "./lib/1llest-waveform-vue.umd.js"
     },
     "./dist/style.css": "./lib/style.css"
   },
