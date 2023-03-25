@@ -237,14 +237,14 @@ defineExpose({
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: #1e1e1e;
+  background-color: #232323;
   border-radius: 7px;
   overflow: hidden;
   z-index: 0;
 }
 
 #ill-wave-container > #ill-skeleton > #ill-skeleton__load {
-  background-color: #1e1e1e;
+  background-color: #232323;
   background-image: linear-gradient(
     to right,
     rgba(0, 0, 0, 0) 0%,
@@ -304,6 +304,6 @@ defineExpose({
 
 .fade-enter,
 .fade-leave-to {
-  transform: translateX(100%);
+  opacity: 0;
 }
 </style>
