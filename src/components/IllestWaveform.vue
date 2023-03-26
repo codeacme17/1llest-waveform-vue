@@ -75,10 +75,10 @@ let waveMask: WaveMask
 
 // initialize waveform
 async function init(): Promise<void> {
+  if (ready.value) return
   emits('onInit', true)
   await initAudio()
-  await initWave()
-  await initWaveMask()
+  await Promise.all([initWave(), initWaveMask()])
   ready.value = true
   emits('onReady', ready.value)
 }
