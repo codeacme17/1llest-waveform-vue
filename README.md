@@ -1,21 +1,49 @@
 <br />
-<br />
-
 <p align="center">
   <img width="200" alt="logo" src="https://github.com/codeacme17/repo-assets/blob/main/waveform/logo.svg "/> 
 </p>
 
-<br />
-<br />
+<h3 align="center">
+  <samp>
+    1llest-waveform-vue
+  </samp>
+</h3>
 
-
-<p>
-
+<p align="center">
+  <samp>
+    A lightweight and controllable audio visualization vue3 plugin
+  </samp>
 </p>
 
 
-> A lightweight and controllable audio visualization vue3 plugin
+## Start
 
+### Install
+```bash
+npm install 1llest-waveform-vue
+```
+
+### Usage
+Global component
+```javascript
+// main.ts
+import { createApp } from "vue"
+import App from "./App.vue"
+
+import IllestWaveform from "1llest-waveform-vue"
+import "1llest-waveform-vue/dist/style.css"
+
+const app = createApp(App)
+
+app.use(IllestWaveform)
+app.mount("#app")
+```
+Local component
+```js
+// example.vue
+import { IllestWaveform } from "1llest-waveform-vue"
+import "1llest-waveform-vue/dist/style.css"
+```
 
 
 ## Contributing
