@@ -57,7 +57,7 @@ export default class WebAudioController extends WebAudio {
   }
 
   public replay(): void {
-    this.stop()
+    if (this.audioBufferSourceNode) this.stop()
     this.play()
   }
 
