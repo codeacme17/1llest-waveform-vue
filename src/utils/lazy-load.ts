@@ -21,8 +21,8 @@ function lazyLoader(el: HTMLElement, handler: () => void): void {
     window.pageYOffset + el.getBoundingClientRect().top
 
   if (
-    elDistanceToTop >= windowOffY - windowHeight / 2 &&
-    elDistanceToTop - windowOffY - windowHeight < windowHeight / 2
+    elDistanceToTop >= windowOffY - windowHeight / 4 &&
+    elDistanceToTop - windowOffY - windowHeight < windowHeight / 4
   )
     handler()
 }
