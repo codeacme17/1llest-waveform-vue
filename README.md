@@ -56,13 +56,13 @@ import "1llest-waveform-vue/dist/style.css"
     ref="waveform_ref"
     v-bind="waveOptions"
     @on-init="initHandler"
-		@on-ready="readyHandler"
+    @on-ready="readyHandler"
     @on-play="(v: boolean) => (playing = v)"
     @on-pause="(v: boolean) => (playing = v)"
     @on-finish="finishHandler"
     @on-click="clickHandler"
   />
-	<div>{{ currentTime }} - {{ durationTime }}</div>
+  <div>{{ currentTime }} - {{ durationTime }}</div>
 </template>
 
 <script setup lang="ts">
@@ -70,7 +70,7 @@ import "1llest-waveform-vue/dist/style.css"
   import type { Ref } from "vue"
   import { IllestWaveform } from "1llest-waveform-vue"
   import type { IllestWaveformProps } from "1llest-waveform-vue"
-	import "1llest-waveform-vue/dist/style.css"
+  import "1llest-waveform-vue/dist/style.css"
   
   const waveOptions = reactive<IllestWaveformProps>({
     url: "example.mp3"
