@@ -14,16 +14,16 @@ type CanvasLineCap = 'butt' | 'round' | 'square'
 
 type IllestWaveformProps = {
   url: string
-  lineWidth: number
-  lineCap: CanvasLineCap
-  lineColor: string
-  samplingRate: number
-  cursorWidth: number
-  cursorColor: string
-  maskColor: string
-  lazy: boolean
-  skeleton: boolean
-  skeletonColor: string
+  lineWidth?: number
+  lineCap?: CanvasLineCap
+  lineColor?: string
+  samplingRate?: number
+  cursorWidth?: number
+  cursorColor?: string
+  maskColor?: string
+  lazy?: boolean
+  skeleton?: boolean
+  skeletonColor?: string
 }
 
 const props = withDefaults(defineProps<IllestWaveformProps>(), {

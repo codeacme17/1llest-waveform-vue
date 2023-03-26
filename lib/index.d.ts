@@ -1,8 +1,10 @@
-import { App } from 'vue'
+import { Component } from 'vue'
 
 declare const _default: {
-  install: (app: App) => void
+  install: (app: Component) => void
 }
+
+type CanvasLineCap = 'butt' | 'round' | 'square'
 
 export declare const IllestWaveform: import('vue').DefineComponent<
   {
@@ -12,52 +14,52 @@ export declare const IllestWaveform: import('vue').DefineComponent<
     }
     lineWidth: {
       type: NumberConstructor
-      required: true
+      required: false
       default: number
     }
     lineCap: {
       type: StringConstructor
-      required: true
+      required: false
       default: string
     }
     lineColor: {
       type: StringConstructor
-      required: true
+      required: false
       default: string
     }
     samplingRate: {
       type: NumberConstructor
-      required: true
+      required: false
       default: number
     }
     cursorWidth: {
       type: NumberConstructor
-      required: true
+      required: false
       default: number
     }
     cursorColor: {
       type: StringConstructor
-      required: true
+      required: false
       default: string
     }
     maskColor: {
       type: StringConstructor
-      required: true
+      required: false
       default: string
     }
     lazy: {
       type: BooleanConstructor
-      required: true
+      required: false
       default: boolean
     }
     skeleton: {
       type: BooleanConstructor
-      required: true
+      required: false
       default: boolean
     }
     skeletonColor: {
       type: StringConstructor
-      required: true
+      required: false
       default: string
     }
   },
@@ -130,52 +132,52 @@ export declare const IllestWaveform: import('vue').DefineComponent<
       }
       lineWidth: {
         type: NumberConstructor
-        required: true
+        required: false
         default: number
       }
       lineCap: {
         type: StringConstructor
-        required: true
+        required: false
         default: string
       }
       lineColor: {
         type: StringConstructor
-        required: true
+        required: false
         default: string
       }
       samplingRate: {
         type: NumberConstructor
-        required: true
+        required: false
         default: number
       }
       cursorWidth: {
         type: NumberConstructor
-        required: true
+        required: false
         default: number
       }
       cursorColor: {
         type: StringConstructor
-        required: true
+        required: false
         default: string
       }
       maskColor: {
         type: StringConstructor
-        required: true
+        required: false
         default: string
       }
       lazy: {
         type: BooleanConstructor
-        required: true
+        required: false
         default: boolean
       }
       skeleton: {
         type: BooleanConstructor
-        required: true
+        required: false
         default: boolean
       }
       skeletonColor: {
         type: StringConstructor
-        required: true
+        required: false
         default: string
       }
     }>
@@ -195,22 +197,24 @@ export declare const IllestWaveform: import('vue').DefineComponent<
     cursorWidth: number
     cursorColor: string
     maskColor: string
+    lazy: boolean
+    skeleton: boolean
     skeletonColor: string
   }
 >
 
 export type IllestWaveformProps = {
   url: string
-  lineWidth: number
-  lineCap: CanvasLineCap
-  lineColor: string
-  samplingRate: number
-  cursorWidth: number
-  cursorColor: string
-  maskColor: string
-  lazy: boolean
-  skeleton: boolean
-  skeletonColor: string
+  lineWidth?: number
+  lineCap?: CanvasLineCap
+  lineColor?: string
+  samplingRate?: number
+  cursorWidth?: number
+  cursorColor?: string
+  maskColor?: string
+  lazy?: boolean
+  skeleton?: boolean
+  skeletonColor?: string
 }
 
 export default _default
