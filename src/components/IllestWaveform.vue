@@ -3,12 +3,12 @@ import { ref, onMounted, watchEffect, onUnmounted } from 'vue'
 import WebAudioController from '../modules/WebAudio/Controller'
 import Wave from '../modules/Wave/index'
 import WaveMask from '../modules/Wave/WaveMask'
+import { formatSecond } from '../utils/format-time'
 import {
   lazyLoader,
   registerScrollHander,
   canelScrollHander,
 } from '../utils/lazy-load'
-import { formatSecond } from '../utils/format-time'
 
 type CanvasLineCap = 'butt' | 'round' | 'square'
 
@@ -65,9 +65,9 @@ function lazyLoadHandler() {
 }
 
 // initialize
-const ready = ref<boolean>(false)
 const waveRef = ref<HTMLCanvasElement | null>(null)
 const maskRef = ref<HTMLCanvasElement | null>(null)
+const ready = ref<boolean>(false)
 
 let webAudioController: WebAudioController
 let wave: Wave
@@ -143,6 +143,7 @@ function clickHandler(): void {
   const pickedTime: number =
     (moveX.value / wave._canvas.width) * webAudioController._audioDuration
   webAudioController.pick(pickedTime)
+  currentTime.value = pickedTime
   emits('onFinish', false)
 }
 
