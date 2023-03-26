@@ -8,6 +8,7 @@ import {
   registerScrollHander,
   canelScrollHander,
 } from '../utils/lazy-load'
+import { formatSecond } from '../utils/format-time'
 
 type CanvasLineCap = 'butt' | 'round' | 'square'
 
@@ -36,20 +37,12 @@ const props = withDefaults(defineProps<IllestWaveformProps>(), {
   skeleton: true,
 })
 
-const emits = defineEmits([
-  'onInit', // start init hook
-  'onReady', // ready to play, rended
-  'onPlay', // start play hook
-  'onPause', // pause hook
-  'onFinish', // finish current track hook
-])
-
 // Render trigger can control the render time
 // of current waveform
 const renderTrigger = ref<boolean>(false)
 const waveformContainer = ref<HTMLElement | null>(null)
 
-onMounted(() => {
+onMounted(async () => {
   if (props.lazy) {
     lazyLoader(waveformContainer.value as HTMLElement, lazyLoadHandler)
     registerScrollHander(
@@ -57,9 +50,9 @@ onMounted(() => {
       lazyLoadHandler
     )
     watchEffect(async () => {
-      if (renderTrigger.value) initWaveform()
+      if (renderTrigger.value) await init()
     })
-  } else initWaveform()
+  } else await init()
 })
 
 onUnmounted(() => {
@@ -71,33 +64,34 @@ function lazyLoadHandler() {
   renderTrigger.value = true
 }
 
-// initialize waveform
+// initialize
 const ready = ref<boolean>(false)
-async function initWaveform(): Promise<string> {
+const waveRef = ref<HTMLCanvasElement | null>(null)
+const maskRef = ref<HTMLCanvasElement | null>(null)
+
+let webAudioController: WebAudioController
+let wave: Wave
+let waveMask: WaveMask
+
+// initialize waveform
+async function init(): Promise<void> {
   emits('onInit', true)
   await initAudio()
-  initWave()
-  initWaveMask()
+  await initWave()
+  await initWaveMask()
   ready.value = true
   emits('onReady', ready.value)
-  return Promise.resolve('finish init waveform')
 }
 
 // initialize web audio
-let webAudioController: WebAudioController
-
-async function initAudio(): Promise<string> {
+async function initAudio(): Promise<void> {
   webAudioController = new WebAudioController(props)
   await webAudioController.setupAudio()
   watchIsFinish()
-  return Promise.resolve('finish init audio')
 }
 
 // initialize wave canvas
-let wave: Wave
-const waveRef = ref<HTMLCanvasElement | null>(null)
-
-async function initWave(): Promise<string> {
+async function initWave(): Promise<void> {
   wave = new Wave(
     waveRef.value as HTMLCanvasElement,
     props,
@@ -108,13 +102,9 @@ async function initWave(): Promise<string> {
     wave._props = props
     wave.setCanvasStyle()
   })
-  return Promise.resolve('finish init audio')
 }
 
 // initialize wave mask canvas
-let waveMask: WaveMask
-const maskRef = ref<HTMLCanvasElement | null>(null)
-
 async function initWaveMask(): Promise<void> {
   waveMask = new WaveMask(
     maskRef.value as HTMLCanvasElement,
@@ -127,6 +117,33 @@ async function initWaveMask(): Promise<void> {
     waveMask._props = props
     waveMask.setCanvasStyle()
   })
+}
+
+// Waveform handlers
+const moveX = ref<number>(0)
+const currentTime = ref<number>(0)
+const maskWidth = ref<number>(0)
+
+function drawWaveMask(): void | undefined {
+  if (!webAudioController._playing) return
+  requestAnimationFrame(drawWaveMask)
+  currentTime.value = webAudioController._currentTime
+  maskWidth.value =
+    (currentTime.value / webAudioController._audioDuration) * wave._canvas.width
+}
+
+function mouseMoveHandler(e: any): void {
+  if (!ready.value) return
+  moveX.value = e.layerX
+}
+
+function clickHandler(): void {
+  if (!ready.value) return
+  maskWidth.value = moveX.value
+  const pickedTime: number =
+    (moveX.value / wave._canvas.width) * webAudioController._audioDuration
+  webAudioController.pick(pickedTime)
+  emits('onFinish', false)
 }
 
 // Audio handlers
@@ -161,37 +178,29 @@ function watchIsFinish(): void {
   })
 }
 
-// Waveform handlers
-const moveX = ref<number>(0)
-const currentTime = ref<number>(0)
-const maskWidth = ref<number>(0)
-
-function drawWaveMask(): void | undefined {
-  if (!webAudioController._playing) return
-  requestAnimationFrame(drawWaveMask)
-  currentTime.value = webAudioController._currentTime
-  maskWidth.value =
-    (currentTime.value / webAudioController._audioDuration) * wave._canvas.width
+function getCurrentTime(): string {
+  return formatSecond(currentTime.value)
 }
 
-function mouseMoveHandler(e: any): void {
-  if (!ready.value) return
-  moveX.value = e.layerX
+function getDuration(): string {
+  const duration = webAudioController._audioDuration
+  return formatSecond(duration)
 }
 
-function clickHandler(): void {
-  if (!ready.value) return
-  maskWidth.value = moveX.value
-  const pickedTime: number =
-    (moveX.value / wave._canvas.width) * webAudioController._audioDuration
-  webAudioController.pick(pickedTime)
-  emits('onFinish', false)
-}
+const emits = defineEmits([
+  'onInit', // start init hook
+  'onReady', // ready to play, rended
+  'onPlay', // start play hook
+  'onPause', // pause hook
+  'onFinish', // finish current track hook
+])
 
 defineExpose({
   play,
   pause,
   replay,
+  getCurrentTime,
+  getDuration,
 })
 </script>
 
