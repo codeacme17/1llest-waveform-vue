@@ -1,6 +1,6 @@
 <br />
 <p align="center">
-  <img width="200" alt="logo" src="https://github.com/codeacme17/repo-assets/blob/main/waveform/logo.svg "/> 
+  <img width="200" alt="logo" src="https://raw.githubusercontent.com/codeacme17/repo-assets/ebe95dad5e4904d000cf8a7d3642a0739cb708c7/waveform/logo.svg"/> 
 </p>
 
 <h3 align="center">
