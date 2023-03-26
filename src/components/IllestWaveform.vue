@@ -144,6 +144,7 @@ function clickHandler(): void {
     (moveX.value / wave._canvas.width) * webAudioController._audioDuration
   webAudioController.pick(pickedTime)
   currentTime.value = pickedTime
+  emits('onClick', waveformContainer)
   emits('onFinish', false)
 }
 
@@ -194,6 +195,7 @@ const emits = defineEmits([
   'onPlay', // start play hook
   'onPause', // pause hook
   'onFinish', // finish current track hook
+  'onClick', // while click the waveform
 ])
 
 defineExpose({
