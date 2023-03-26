@@ -12,6 +12,7 @@ specifiers:
   eslint-config-prettier: ^8.8.0
   eslint-plugin-prettier: ^4.2.1
   eslint-plugin-vue: ^9.10.0
+  husky: ^8.0.3
   prettier: ^2.8.3
   typescript: ^4.6.4
   vite: ^3.2.0
@@ -33,6 +34,7 @@ devDependencies:
   eslint-config-prettier: 8.8.0_eslint@8.36.0
   eslint-plugin-prettier: 4.2.1_ywlv3zveqg2kxfq44lflihh5mm
   eslint-plugin-vue: 9.10.0_eslint@8.36.0
+  husky: 8.0.3
   prettier: 2.8.7
   typescript: 4.9.5
   vite: 3.2.5_@types+node@18.15.8
@@ -1807,6 +1809,12 @@ packages:
 
   /he/1.2.0:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
+    hasBin: true
+    dev: true
+
+  /husky/8.0.3:
+    resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
+    engines: {node: '>=14'}
     hasBin: true
     dev: true
 
