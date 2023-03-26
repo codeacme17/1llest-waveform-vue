@@ -26,12 +26,12 @@ type IllestWaveformProps = {
 }
 
 const props = withDefaults(defineProps<IllestWaveformProps>(), {
-  lineWidth: 2,
+  lineWidth: 0.5,
   lineCap: 'round',
   lineStyle: '#5e5e5e',
   cursorWidth: 2,
   cursorColor: '#fff',
-  samplingRate: 1050,
+  samplingRate: 20058,
   maskColor: '#fff',
   lazy: true,
   skeleton: true,
