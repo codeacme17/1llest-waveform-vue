@@ -1,7 +1,6 @@
 {
   "name": "1llest-waveform-vue",
-  "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "main": "./lib/1llest-waveform-vue.umd.js",
   "module": "./lib/1llest-waveform-vue.mjs",
   "types": "./lib/index.d.ts",
@@ -14,7 +13,7 @@
   },
   "scripts": {
     "build": "vite build --outDir lib",
-    "build:types": "deno run buildTypes.ts",
+    "build:types": "deno run --allow-env --allow-read --allow-write buildTypes.ts",
     "lint": "eslint src --ext .ts,.vue",
     "prepare": "husky install"
   },
