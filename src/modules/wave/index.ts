@@ -64,7 +64,7 @@ export default class Wave {
   public setCanvasStyle(): void {
     this.canvasCtx.lineWidth = this.props.lineWidth as number
     this.canvasCtx.lineCap = this.props.lineCap as CanvasLineCap
-    this.canvasCtx.strokeStyle = this.props.lineStyle as string
+    this.canvasCtx.strokeStyle = this.props.lineColor as string
     this.canvasCtx.stroke()
   }
 }

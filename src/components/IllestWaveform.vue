@@ -16,25 +16,27 @@ type IllestWaveformProps = {
   url: string
   lineWidth: number
   lineCap: CanvasLineCap
-  lineStyle: string
+  lineColor: string
   samplingRate: number
   cursorWidth: number
   cursorColor: string
   maskColor: string
   lazy: boolean
   skeleton: boolean
+  skeletonColor: string
 }
 
 const props = withDefaults(defineProps<IllestWaveformProps>(), {
   lineWidth: 0.5,
   lineCap: 'round',
-  lineStyle: '#5e5e5e',
+  lineColor: '#5e5e5e',
   cursorWidth: 2,
   cursorColor: '#fff',
-  samplingRate: 20058,
+  samplingRate: 22050,
   maskColor: '#fff',
   lazy: true,
   skeleton: true,
+  skeletonColor: '#232323',
 })
 
 // Render trigger can control the render time
@@ -216,8 +218,16 @@ defineExpose({
     @click="clickHandler"
   >
     <transition name="fade">
-      <div v-show="props.skeleton && !ready" id="ill-skeleton">
-        <div v-show="!ready" id="ill-skeleton__load" />
+      <div
+        v-show="props.skeleton && !ready"
+        id="ill-skeleton"
+        :style="`background-color: ${skeletonColor}`"
+      >
+        <div
+          v-show="!ready"
+          id="ill-skeleton__load"
+          :style="`background-color: ${skeletonColor}`"
+        />
       </div>
     </transition>
 
@@ -249,14 +259,12 @@ defineExpose({
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: #232323;
   border-radius: 7px;
   overflow: hidden;
   z-index: 0;
 }
 
 #ill-wave-container > #ill-skeleton > #ill-skeleton__load {
-  background-color: #232323;
   background-image: linear-gradient(
     to right,
     rgba(0, 0, 0, 0) 0%,

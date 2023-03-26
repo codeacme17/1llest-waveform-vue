@@ -6,3 +6,5 @@ export default {
     app.component('IllestWaveform', IllestWaveform)
   },
 }
+
+export { IllestWaveform }
