@@ -302,16 +302,16 @@ defineExpose({
 
 @keyframes skeleton-load {
   from {
-    margin-left: -20%;
+    transform: translateX(-50%);
   }
   to {
-    margin-left: 100%;
+    transform: translateX(350%);
   }
 }
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: all ease-in-out 0.7s;
+  transition: all ease-in-out 0.4s;
 }
 
 .fade-enter,
