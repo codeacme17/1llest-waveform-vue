@@ -302,10 +302,10 @@ defineExpose({
 
 @keyframes skeleton-load {
   from {
-    transform: translateX(-50%);
+    transform: translateX(-80%);
   }
   to {
-    transform: translateX(350%);
+    transform: translateX(330%);
   }
 }
 
