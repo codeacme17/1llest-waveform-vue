@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 import glob from 'npm:fast-glob@3.2.12'
 import { Project } from 'https://deno.land/x/ts_morph/mod.ts'
@@ -24,7 +25,7 @@ const CONFIG_PATH = await Deno.realPath('./tsconfig.json')
     skipAddingFilesFromTsConfig: true,
   })
 
-  const files = await glob(['src/**/*.ts', 'src/**/*.vue'])
+  const files = await glob(['src/**/*.vue'])
   const sourceFiles = []
 
   let index = 1

@@ -62,6 +62,11 @@ export declare const IllestWaveform: import('vue').DefineComponent<
       required: false
       default: string
     }
+    interact: {
+      type: BooleanConstructor
+      required: false
+      default: boolean
+    }
   },
   {
     props: {
@@ -76,6 +81,7 @@ export declare const IllestWaveform: import('vue').DefineComponent<
       lazy: boolean
       skeleton: boolean
       skeletonColor: string
+      interact: boolean
     }
     renderTrigger: import('vue').Ref<boolean>
     waveformContainer: import('vue').Ref<HTMLElement | null>
@@ -180,6 +186,11 @@ export declare const IllestWaveform: import('vue').DefineComponent<
         required: false
         default: string
       }
+      interact: {
+        type: BooleanConstructor
+        required: false
+        default: boolean
+      }
     }>
   > & {
     onOnInit?: ((...args: any[]) => any) | undefined
@@ -200,6 +211,7 @@ export declare const IllestWaveform: import('vue').DefineComponent<
     lazy: boolean
     skeleton: boolean
     skeletonColor: string
+    interact: boolean
   }
 >
 
@@ -215,6 +227,7 @@ export type IllestWaveformProps = {
   lazy?: boolean
   skeleton?: boolean
   skeletonColor?: string
+  interact?: boolean
 }
 
 export default _default
