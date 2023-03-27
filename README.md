@@ -20,7 +20,7 @@
 
 This component is written using the native  [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API), and does not use any dependencies other than vue3 in the production environment. Of course, this means: if your target browser does not support the features of the web audio api, then my Plugins will also not apply. You can go to  [Browser compatibility](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API#audiocontext_2)  to see the `AudioContext` line to check whether it is compatible with the target browser
 
-
+**Example** - [Live Demo](https://codeacme17.github.io/1llest-waveform-vue/)
 
 ## Start
 ### Install
@@ -167,7 +167,7 @@ import "1llest-waveform-vue/dist/style.css"
 
 > You can call these methods directly on the waveform component instance, such like `waveform_ref.value.play()`
 
-| methods        | description                                                  | return   |
+| method        | description                                                  | return   |
 | :------------- | :----------------------------------------------------------- | -------- |
 | play           | trigger the playback method of the waveform so that it starts playing the current audio | -        |
 | pause          | trigger the pause method of the waveform to make it pause playback | -        |
