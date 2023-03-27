@@ -93,7 +93,7 @@ const getDuration = () => {
       <div class="ml-5">
         <button
           @click="play"
-          class="btn text-green-400"
+          class="btn text-[#3e6bff]"
           v-show="!playing && !finished"
         >
           <PlayIcon />
@@ -102,14 +102,14 @@ const getDuration = () => {
 
         <button
           @click="pause"
-          class="btn text-yellow-400"
+          class="btn text-yellow-500"
           v-show="playing && !finished"
         >
           <PauseIcon />
           <div>PAUSE</div>
         </button>
 
-        <button @click="replay" class="btn" v-show="finished">
+        <button @click="replay" class="btn text-green-500" v-show="finished">
           <ReplayIcon />
           <div>REPLAY</div>
         </button>
@@ -120,7 +120,7 @@ const getDuration = () => {
 
 <style scoped lang="scss">
 .btn {
-  @apply flex items-center bg-neutral-800 px-5 py-1 rounded-sm;
+  @apply flex items-center bg-neutral-700 px-5 py-1 rounded-sm;
 
   & div {
     @apply ml-1 font-bold -mb-0.5;

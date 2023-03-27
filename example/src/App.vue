@@ -11,39 +11,39 @@ type Props = {
 const items = reactive<Props[]>([
   {
     id: nanoid(),
-    url:`${import.meta.env.BASE_URL}audios/loop-1.wav`
+    url:`${import.meta.env.BASE_URL}audios/loop-1.mp3`
   },
   {
     id: nanoid(),
-    url:`${import.meta.env.BASE_URL}audios/loop-2.wav`
+    url:`${import.meta.env.BASE_URL}audios/loop-2.mp3`
   },
   {
     id: nanoid(),
-    url:`${import.meta.env.BASE_URL}audios/loop-3.wav`
+    url:`${import.meta.env.BASE_URL}audios/loop-3.mp3`
   },
   {
     id: nanoid(),
-    url:`${import.meta.env.BASE_URL}audios/loop-4.wav`
+    url:`${import.meta.env.BASE_URL}audios/loop-4.mp3`
   },
   {
     id: nanoid(),
-    url:`${import.meta.env.BASE_URL}audios/loop-5.wav`
+    url:`${import.meta.env.BASE_URL}audios/loop-5.mp3`
   },
   {
     id: nanoid(),
-    url:`${import.meta.env.BASE_URL}audios/loop-6.wav`
+    url:`${import.meta.env.BASE_URL}audios/loop-6.mp3`
   },
   {
     id: nanoid(),
-    url:`${import.meta.env.BASE_URL}audios/loop-7.wav`
+    url:`${import.meta.env.BASE_URL}audios/loop-7.mp3`
   },
   {
     id: nanoid(),
-    url:`${import.meta.env.BASE_URL}audios/loop-8.wav`
+    url:`${import.meta.env.BASE_URL}audios/loop-8.mp3`
   },
   {
     id: nanoid(),
-    url:`${import.meta.env.BASE_URL}audios/loop-9.wav`
+    url:`${import.meta.env.BASE_URL}audios/loop-9.mp3`
   }
 ])
 </script>
@@ -58,6 +58,6 @@ const items = reactive<Props[]>([
       </span>
     </h1>
 
-    <Demo v-for="item in items" :props="item" />
+    <Demo v-for="item in items" :key="item.id" :props="item" />
   </section>
 </template>

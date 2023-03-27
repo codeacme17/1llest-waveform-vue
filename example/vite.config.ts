@@ -5,9 +5,9 @@ import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [vue()],
-  base: process.env.NODE_ENV  === "development" ? import.meta.url : "/1llest-waveform-vue/",
+  base: process.env.NODE_ENV  === "development" ? "" : "/1llest-waveform-vue/",
   build: {
-    outDir: resolve(__dirname,"../docs"),
+    outDir: resolve(__dirname, "../docs"),
   },
   resolve: {
     alias: {
