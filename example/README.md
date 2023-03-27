@@ -1,4 +1,3 @@
-### Start
 
 ```bash
 pnpm install
