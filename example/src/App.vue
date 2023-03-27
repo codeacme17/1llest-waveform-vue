@@ -11,40 +11,40 @@ type Props = {
 const items = reactive<Props[]>([
   {
     id: nanoid(),
-    url: "/audios/loop-1.wav",
+    url:`${import.meta.env.BASE_URL}audios/loop-1.wav`
   },
   {
     id: nanoid(),
-    url: "/audios/loop-2.wav",
+    url:`${import.meta.env.BASE_URL}audios/loop-2.wav`
   },
   {
     id: nanoid(),
-    url: "/audios/loop-3.wav",
+    url:`${import.meta.env.BASE_URL}audios/loop-3.wav`
   },
   {
     id: nanoid(),
-    url: "/audios/loop-4.wav",
+    url:`${import.meta.env.BASE_URL}audios/loop-4.wav`
   },
   {
     id: nanoid(),
-    url: "/audios/loop-5.wav",
+    url:`${import.meta.env.BASE_URL}audios/loop-5.wav`
   },
   {
     id: nanoid(),
-    url: "/audios/loop-6.wav",
+    url:`${import.meta.env.BASE_URL}audios/loop-6.wav`
   },
   {
     id: nanoid(),
-    url: "/audios/loop-7.wav",
+    url:`${import.meta.env.BASE_URL}audios/loop-7.wav`
   },
   {
     id: nanoid(),
-    url: "/audios/loop-8.wav",
+    url:`${import.meta.env.BASE_URL}audios/loop-8.wav`
   },
   {
     id: nanoid(),
-    url: "/audios/loop-9.wav",
-  },
+    url:`${import.meta.env.BASE_URL}audios/loop-9.wav`
+  }
 ])
 </script>
 
