@@ -22,6 +22,8 @@ export default class WebAudio {
   }
 
   get _audioDuration(): number {
+    if (!this.audioBuffer)
+      throw new Error('can not get duration before audio inited')
     return this.audioBuffer.duration
   }
 
@@ -36,7 +38,7 @@ export default class WebAudio {
   }
 
   private createFilterData(): Promise<number[][]> {
-    const samplingRate: number | undefined = this.props.samplingRate
+    const samplingRate: number = this.props.samplingRate as number
     const channels: number = this.audioBuffer.numberOfChannels
     const rawDataList: Float32Array[] = []
     const filteredData: number[][] = []
