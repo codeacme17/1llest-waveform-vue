@@ -10,4 +10,5 @@ export type IllestWaveformProps = {
   lazy?: boolean
   skeleton?: boolean
   skeletonColor?: string
+  interact?: boolean
 }

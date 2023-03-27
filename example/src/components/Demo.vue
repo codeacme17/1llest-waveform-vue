@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref, watchEffect, defineProps } from "vue"
-import type { Ref } from "vue"
-import { IllestWaveform } from "1llest-waveform-vue"
-import type { IllestWaveformProps } from "1llest-waveform-vue"
-import "1llest-waveform-vue/dist/style.css"
-import PlayIcon from "./icons/Play.vue"
-import PauseIcon from "./icons/Pause.vue"
-import ReplayIcon from "./icons/Replay.vue"
+import { onMounted, reactive, ref, watchEffect, defineProps } from 'vue'
+import type { Ref } from 'vue'
+// import { IllestWaveform } from '1llest-waveform-vue'
+import IllestWaveform from '../../../src/components/IllestWaveform.vue'
+import type { IllestWaveformProps } from '1llest-waveform-vue'
+import '1llest-waveform-vue/dist/style.css'
+import PlayIcon from './icons/Play.vue'
+import PauseIcon from './icons/Pause.vue'
+import ReplayIcon from './icons/Replay.vue'
 
-const { props } = defineProps(["props"])
+const { props } = defineProps(['props'])
 
 const waveOptions = reactive<IllestWaveformProps>({
   url: props.url,
@@ -24,8 +25,8 @@ const init = ref(false)
 const playing = ref(false)
 const finished = ref(false)
 const ready = ref(false)
-const currentTime = ref("0:00")
-const durationTime = ref("0:00")
+const currentTime = ref('0:00')
+const durationTime = ref('0:00')
 
 const initHandler = (v: boolean) => {
   init.value = v
@@ -92,24 +93,24 @@ const getDuration = () => {
 
       <div class="ml-5">
         <button
-          @click="play"
-          class="btn text-[#3e6bff]"
           v-show="!playing && !finished"
+          class="btn text-[#3e6bff]"
+          @click="play"
         >
           <PlayIcon />
           <div class="ml-2">PLAY</div>
         </button>
 
         <button
-          @click="pause"
-          class="btn text-yellow-500"
           v-show="playing && !finished"
+          class="btn text-yellow-500"
+          @click="pause"
         >
           <PauseIcon />
           <div>PAUSE</div>
         </button>
 
-        <button @click="replay" class="btn text-green-500" v-show="finished">
+        <button v-show="finished" class="btn text-green-500" @click="replay">
           <ReplayIcon />
           <div>REPLAY</div>
         </button>

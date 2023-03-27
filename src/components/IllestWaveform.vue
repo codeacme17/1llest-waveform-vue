@@ -24,6 +24,7 @@ type IllestWaveformProps = {
   lazy?: boolean
   skeleton?: boolean
   skeletonColor?: string
+  interact?: boolean
 }
 
 const props = withDefaults(defineProps<IllestWaveformProps>(), {
@@ -37,6 +38,7 @@ const props = withDefaults(defineProps<IllestWaveformProps>(), {
   lazy: true,
   skeleton: true,
   skeletonColor: '#232323',
+  interact: true,
 })
 
 // Render trigger can control the render time
@@ -135,12 +137,12 @@ function drawWaveMask(): void | undefined {
 }
 
 function mouseMoveHandler(e: any): void {
-  if (!ready.value) return
+  if (!ready.value || !props.interact) return
   moveX.value = e.layerX
 }
 
 function clickHandler(): void {
-  if (!ready.value) return
+  if (!ready.value || !props.interact) return
   maskWidth.value = moveX.value
   const pickedTime: number =
     (moveX.value / wave._canvas.width) * webAudioController._audioDuration
@@ -213,7 +215,6 @@ defineExpose({
   <section
     id="ill-wave-container"
     ref="waveformContainer"
-    :style="`${!ready ? 'cursor: progress;' : 'cursor: pointer'}`"
     @mousemove="mouseMoveHandler"
     @click="clickHandler"
   >
@@ -238,7 +239,7 @@ defineExpose({
     </div>
 
     <div
-      v-show="ready"
+      v-show="ready && props.interact"
       id="ill-cursor"
       :style="`width:${props.cursorWidth}px; transform: translateX(${moveX}px);background-color: ${props.cursorColor}; `"
     />
@@ -302,6 +303,7 @@ defineExpose({
   top: 0px;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 #ill-wave-container:hover #ill-cursor {
