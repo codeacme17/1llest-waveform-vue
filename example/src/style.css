@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  color: rgb(213, 213, 213);
+  background-color: #1e1e1e;
+  font-family: "JetBrains Mono";
+}
+
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #3e3e3e;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #525252;
+}
