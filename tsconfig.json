@@ -12,7 +12,7 @@
     "esModuleInterop": true,
     "lib": [
       "ESNext",
-      "DOM"
+      "DOM",
     ],
     "skipLibCheck": true,
     "allowJs": true,
