@@ -47,7 +47,7 @@ Local component
 ```js
 // example.vue
 import { IllestWaveform } from "1llest-waveform-vue"
-import "1llest-waveform-vue/dist/style.css"
+import "1llest-waveform-vue/lib/style.css"
 ```
 ### Component
 ```vue
@@ -70,7 +70,7 @@ import "1llest-waveform-vue/dist/style.css"
   import type { Ref } from "vue"
   import { IllestWaveform } from "1llest-waveform-vue"
   import type { IllestWaveformProps } from "1llest-waveform-vue"
-  import "1llest-waveform-vue/dist/style.css"
+  import "1llest-waveform-vue/lib/style.css"
   
   const waveOptions = reactive<IllestWaveformProps>({
     url: "example.mp3"
@@ -145,10 +145,11 @@ import "1llest-waveform-vue/dist/style.css"
 | samplingRate  | indicates your audio sampling rate. The larger the value, the more lines the waveform will present and the higher the accuracy. But this value is not recommended to be too large, because too large a value will slow down rendering efficiency, the recommended value is between ` 8000 - 44100 ` | `Number`        | `22050`   |
 | cursorWidth   | indicates your cursor width                                  | `Number`        | `2`       |
 | cursorColor   | the color of your cursor                                     | `String`        | `#fff`    |
-| maskColor     | the color of the waveform mask layer                         | `String`        | `fff`     |
+| maskColor     | the color of the waveform mask layer                         | `String`        | `#fff`    |
 | lazy          | whether to enable lazy loading mode, if you want to display multiple waveforms as a list, this property is very useful | `Boolean`       | `true`    |
 | skeleton      | whether to enable the skeleton during waveform loading       | `Boolean`       | `true`    |
 | skeletonColor | the color of the skeleton                                    | `String`        | `#232323` |
+| interact      | indicates whether you want the user to interact with the waveform | `Boolean`       | `true`    |
 
 ### Events
 
