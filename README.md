@@ -36,7 +36,7 @@ import { createApp } from "vue"
 import App from "./App.vue"
 
 import IllestWaveform from "1llest-waveform-vue"
-import "1llest-waveform-vue/dist/style.css"
+import "1llest-waveform-vue/lib/style.css"
 
 const app = createApp(App)
 
