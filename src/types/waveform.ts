@@ -1,3 +1,5 @@
+import type { Ref } from 'vue'
+
 export type IllestWaveformProps = {
   url: string
   lineWidth?: number
@@ -7,8 +9,8 @@ export type IllestWaveformProps = {
   cursorWidth?: number
   cursorColor?: string
   maskColor?: string
-  lazy?: boolean
-  skeleton?: boolean
+  lazy?: boolean | Ref<boolean>
+  skeleton?: boolean | Ref<boolean>
   skeletonColor?: string
-  interact?: boolean
+  interact?: boolean | Ref<boolean>
 }
