@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref, watchEffect, defineProps } from 'vue'
+import {
+  onMounted,
+  reactive,
+  ref,
+  watchEffect,
+  defineProps,
+  computed,
+} from 'vue'
 import type { Ref } from 'vue'
 import { useDark } from '@vueuse/core'
 import IllestWaveform from '../../../src/components/IllestWaveform.vue'
@@ -9,12 +16,15 @@ import PlayIcon from './icons/Play.vue'
 import PauseIcon from './icons/Pause.vue'
 import ReplayIcon from './icons/Replay.vue'
 
-const { props } = defineProps(['props'])
-
 const darkMode = useDark()
+
+const props = defineProps(['url', 'interact', 'skeleton', 'lazy'])
 
 const waveOptions = reactive<IllestWaveformProps>({
   url: props.url,
+  interact: computed(() => props.interact),
+  skeleton: computed(() => props.skeleton),
+  lazy: computed(() => props.lazy),
 })
 
 watchEffect(() => {
