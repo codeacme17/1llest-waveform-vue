@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref, watchEffect, defineProps } from 'vue'
 import type { Ref } from 'vue'
-// import { IllestWaveform } from '1llest-waveform-vue'
-import IllestWaveform from '../../../src/components/IllestWaveform.vue'
+import { IllestWaveform } from '1llest-waveform-vue'
+// import IllestWaveform from '../../../src/components/IllestWaveform.vue'
 import type { IllestWaveformProps } from '1llest-waveform-vue'
 import '1llest-waveform-vue/dist/style.css'
 import PlayIcon from './icons/Play.vue'
@@ -15,7 +15,7 @@ const waveOptions = reactive<IllestWaveformProps>({
   url: props.url,
 })
 
-const waveform_ref = ref<typeof IllestWaveform | null>(null)
+const waveformRef = ref<typeof IllestWaveform | null>(null)
 
 onMounted(() => {
   getCurrentTime()
@@ -46,26 +46,26 @@ const clickHandler = (el: Ref<HTMLElement>) => {
 }
 
 const play = () => {
-  waveform_ref.value!.play()
+  waveformRef.value!.play()
 }
 
 const replay = () => {
-  waveform_ref.value!.replay()
+  waveformRef.value!.replay()
 }
 
 const pause = () => {
-  waveform_ref.value!.pause()
+  waveformRef.value!.pause()
 }
 
 const getCurrentTime = () => {
   watchEffect(() => {
-    const current = waveform_ref.value!.getCurrentTime()
+    const current = waveformRef.value!.getCurrentTime()
     currentTime.value = current
   })
 }
 
 const getDuration = () => {
-  const duration = waveform_ref.value!.getDuration()
+  const duration = waveformRef.value!.getDuration()
   durationTime.value = duration
 }
 </script>
@@ -74,7 +74,7 @@ const getDuration = () => {
   <section class="flex flex-col mb-14">
     <div class="h-16 w-[700px] mx-auto">
       <IllestWaveform
-        ref="waveform_ref"
+        ref="waveformRef"
         v-bind="waveOptions"
         @on-init="initHandler"
         @on-ready="readyHandler"
