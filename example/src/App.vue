@@ -3,8 +3,9 @@ import { reactive } from 'vue'
 import { useDark, useToggle } from '@vueuse/core'
 import { nanoid } from 'nanoid'
 import Demo from './components/Demo.vue'
-// import type { IllestWaveformProps } from '1llest-waveform-vue'
 import type { IllestWaveformProps } from '../../src/types/waveform'
+import SunIcon from '@/components/icons/Sun.vue'
+import MoonIcon from '@/components/icons/Moon.vue'
 
 type Props = {
   id: string
@@ -55,7 +56,7 @@ const items = reactive<Props[]>([
 
 <template>
   <section class="flex flex-col items-center">
-    <h1 class="flex flex-col items-center mt-2 mb-10">
+    <h1 class="flex flex-col items-center mt-2 mb-5">
       <img src="/favicon.svg" class="w-32 h-32" />
 
       <span class="ml-1 font-black text-[20px]">
@@ -63,10 +64,24 @@ const items = reactive<Props[]>([
       </span>
     </h1>
 
-    <div>
-      <button @click="toggleDark()">theme</button>
+    <div class="mb-6">
+      <button class="btn" @click="toggleDark()">
+        <SunIcon v-show="!isDark" />
+        <MoonIcon v-show="isDark" />
+        <div>{{ isDark ? 'dark' : 'light' }}</div>
+      </button>
     </div>
 
     <Demo v-for="item in items" :key="item.id" :props="item" />
   </section>
 </template>
+
+<style scoped lang="scss">
+.btn {
+  @apply flex items-center hover:opacity-80;
+
+  div {
+    @apply ml-1 mt-1;
+  }
+}
+</style>

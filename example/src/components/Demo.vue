@@ -2,8 +2,6 @@
 import { onMounted, reactive, ref, watchEffect, defineProps } from 'vue'
 import type { Ref } from 'vue'
 import { useDark } from '@vueuse/core'
-// import { IllestWaveform } from '1llest-waveform-vue'
-// import type { IllestWaveformProps } from '1llest-waveform-vue'
 import IllestWaveform from '../../../src/components/IllestWaveform.vue'
 import type { IllestWaveformProps } from '../../../src/types/waveform'
 import '1llest-waveform-vue/dist/style.css'

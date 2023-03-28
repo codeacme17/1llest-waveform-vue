@@ -10,7 +10,6 @@
     "type-check": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "1llest-waveform-vue": "^1.0.3",
     "@vueuse/core": "^9.13.0",
     "nanoid": "^3.3.6",
     "sass": "^1.60.0",
