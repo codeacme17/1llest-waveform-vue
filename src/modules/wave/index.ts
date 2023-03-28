@@ -36,6 +36,7 @@ export default class Wave {
     this.canvas.width = this.canvas.offsetWidth
     this.canvas.height = this.canvas.offsetHeight
     this.canvas.style.opacity = '1'
+    this.canvasCtx.fillRect(0, 0, this.canvas.width, this.canvas.height)
   }
 
   private translateCanvasCtx(): void {
@@ -62,6 +63,7 @@ export default class Wave {
   }
 
   public setCanvasStyle(): void {
+    this.canvasCtx.clearRect(0, 0, this.canvas.width, this.canvas.height)
     this.canvasCtx.lineWidth = this.props.lineWidth as number
     this.canvasCtx.lineCap = this.props.lineCap as CanvasLineCap
     this.canvasCtx.strokeStyle = this.props.lineColor as string

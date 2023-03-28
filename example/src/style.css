@@ -2,10 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --dark-main: #1e1e1e;
+}
+
 html {
-  color: rgb(213, 213, 213);
-  background-color: #1e1e1e;
+  @apply text-slate-900 bg-white;
   font-family: "JetBrains Mono";
+  transition: background-color,color ease-in 0.2s
+}
+
+.dark {
+  @apply text-white bg-[var(--dark-main)];
 }
 
 

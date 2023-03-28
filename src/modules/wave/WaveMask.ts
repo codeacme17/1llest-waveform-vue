@@ -18,9 +18,11 @@ export default class WaveMask extends Wave {
     this.canvas.width = this.waveCanvas.width
     this.canvas.height = this.waveCanvas.height
     this.canvas.style.opacity = '1'
+    this.canvasCtx.fillRect(0, 0, this.canvas.width, this.canvas.height)
   }
 
   public setCanvasStyle(): void {
+    this.canvasCtx.clearRect(0, 0, this.canvas.width, this.canvas.height)
     this.canvasCtx.lineWidth = this.props.lineWidth as number
     this.canvasCtx.lineCap = this.props.lineCap as CanvasLineCap
     this.canvasCtx.strokeStyle = this.props.maskColor as string
