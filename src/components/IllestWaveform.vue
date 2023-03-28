@@ -138,7 +138,10 @@ function drawWaveMask(): void | undefined {
 
 function mouseMoveHandler(e: any): void {
   if (!ready.value || !props.interact) return
-  moveX.value = e.layerX
+
+  if (e.layerX <= 0) moveX.value = 0
+  else if (e.layerX >= wave._canvas.width) moveX.value = wave._canvas.width
+  else moveX.value = e.layerX
 }
 
 function clickHandler(): void {
