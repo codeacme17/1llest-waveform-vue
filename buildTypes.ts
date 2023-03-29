@@ -25,7 +25,7 @@ const CONFIG_PATH = await Deno.realPath('./tsconfig.json')
     skipAddingFilesFromTsConfig: true,
   })
 
-  const files = await glob(['src/**/*.vue'])
+  const files = await glob(['src/**/*.vue', 'src/types/waveform.ts'])
   const sourceFiles = []
 
   let index = 1

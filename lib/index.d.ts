@@ -1,10 +1,25 @@
-import { Component } from 'vue'
+import type { Ref, Component } from 'vue'
 
 declare const _default: {
   install: (app: Component) => void
 }
 
 type CanvasLineCap = 'butt' | 'round' | 'square'
+
+export type IllestWaveformProps = {
+  url: string
+  lineWidth?: number
+  lineCap?: CanvasLineCap
+  lineColor?: string
+  samplingRate?: number
+  cursorWidth?: number
+  cursorColor?: string
+  maskColor?: string
+  lazy?: boolean | Ref<boolean>
+  skeleton?: boolean | Ref<boolean>
+  skeletonColor?: string
+  interact?: boolean | Ref<boolean>
+}
 
 export declare const IllestWaveform: import('vue').DefineComponent<
   {
@@ -78,10 +93,10 @@ export declare const IllestWaveform: import('vue').DefineComponent<
       cursorWidth: number
       cursorColor: string
       maskColor: string
-      lazy: boolean
-      skeleton: boolean
+      lazy: boolean | Ref<boolean>
+      skeleton: boolean | Ref<boolean>
       skeletonColor: string
-      interact: boolean
+      interact: boolean | Ref<boolean>
     }
     renderTrigger: import('vue').Ref<boolean>
     waveformContainer: import('vue').Ref<HTMLElement | null>
@@ -174,12 +189,12 @@ export declare const IllestWaveform: import('vue').DefineComponent<
       lazy: {
         type: BooleanConstructor
         required: false
-        default: boolean
+        default: boolean | Ref<boolean>
       }
       skeleton: {
         type: BooleanConstructor
         required: false
-        default: boolean
+        default: boolean | Ref<boolean>
       }
       skeletonColor: {
         type: StringConstructor
@@ -189,7 +204,7 @@ export declare const IllestWaveform: import('vue').DefineComponent<
       interact: {
         type: BooleanConstructor
         required: false
-        default: boolean
+        default: boolean | Ref<boolean>
       }
     }>
   > & {
@@ -208,26 +223,11 @@ export declare const IllestWaveform: import('vue').DefineComponent<
     cursorWidth: number
     cursorColor: string
     maskColor: string
-    lazy: boolean
-    skeleton: boolean
+    lazy: boolean | Ref<boolean>
+    skeleton: boolean | Ref<boolean>
     skeletonColor: string
-    interact: boolean
+    interact: boolean | Ref<boolean>
   }
 >
-
-export type IllestWaveformProps = {
-  url: string
-  lineWidth?: number
-  lineCap?: CanvasLineCap
-  lineColor?: string
-  samplingRate?: number
-  cursorWidth?: number
-  cursorColor?: string
-  maskColor?: string
-  lazy?: boolean
-  skeleton?: boolean
-  skeletonColor?: string
-  interact?: boolean
-}
 
 export default _default

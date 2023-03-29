@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, watchEffect, onUnmounted } from 'vue'
+import type { Ref } from 'vue'
 import { Wave, AudioController } from '../modules'
 import { formatSecond } from '../utils/format-time'
 import {
@@ -19,10 +20,10 @@ type IllestWaveformProps = {
   cursorWidth?: number
   cursorColor?: string
   maskColor?: string
-  lazy?: boolean
-  skeleton?: boolean
+  lazy?: boolean | Ref<boolean>
+  skeleton?: boolean | Ref<boolean>
   skeletonColor?: string
-  interact?: boolean
+  interact?: boolean | Ref<boolean>
 }
 
 const props = withDefaults(defineProps<IllestWaveformProps>(), {
