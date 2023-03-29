@@ -81,23 +81,23 @@ const toggleLazy = () => {
     </h1>
 
     <div class="mb-8 flex">
-      <button class="btn" @click="toggleDark()">
+      <button @click="toggleDark()">
         <SunIcon v-show="!isDark" class="w-5" />
         <MoonIcon v-show="isDark" class="w-5" />
         <div>{{ isDark ? 'dark' : 'light' }}</div>
       </button>
 
-      <button class="btn" @click="toggleInteract()">
+      <button @click="toggleInteract()">
         <span :class="{ 'bg-green-500': interact }" />
         <div>interact</div>
       </button>
 
-      <button class="btn" @click="toggleSkeleton()">
+      <button @click="toggleSkeleton()">
         <span :class="{ 'bg-green-500': skeleton }" />
         <div>skeleton</div>
       </button>
 
-      <button class="btn" @click="toggleLazy()">
+      <button @click="toggleLazy()">
         <span :class="{ 'bg-green-500': lazy }" />
         <div>lazy</div>
       </button>
@@ -115,7 +115,7 @@ const toggleLazy = () => {
 </template>
 
 <style scoped lang="scss">
-.btn {
+button {
   @apply flex items-center hover:opacity-80 mx-3;
 
   div {
