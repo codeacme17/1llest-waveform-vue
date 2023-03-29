@@ -8,7 +8,6 @@ import {
   registerScrollHander,
   canelScrollHander,
 } from '../utils/lazy-load'
-import { read } from 'fs'
 
 type CanvasLineCap = 'butt' | 'round' | 'square'
 
