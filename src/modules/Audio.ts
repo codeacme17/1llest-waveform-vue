@@ -1,4 +1,4 @@
-import type { IllestWaveformProps } from '../../types/waveform'
+import type { IllestWaveformProps } from '../types/waveform'
 
 /**
  *  The WebAudio class creates a playable audio instance

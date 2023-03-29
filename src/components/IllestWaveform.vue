@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, watchEffect, onUnmounted } from 'vue'
-import WebAudioController from '../modules/WebAudio/Controller'
-import Wave from '../modules/Wave/index'
+import { Wave, AudioController } from '../modules'
 import { formatSecond } from '../utils/format-time'
 import {
   lazyLoader,
@@ -71,7 +70,7 @@ function lazyLoadHandler() {
 const waveRef = ref<HTMLCanvasElement | null>(null)
 const ready = ref<boolean>(false)
 
-let webAudioController: WebAudioController
+let webAudioController: AudioController
 let wave: Wave
 
 // initialize waveform
@@ -86,7 +85,7 @@ async function init(): Promise<void> {
 
 // initialize web audio
 async function initAudio(): Promise<void> {
-  webAudioController = new WebAudioController(props)
+  webAudioController = new AudioController(props)
   await webAudioController.setupAudio()
   watchIsFinish()
 }
@@ -198,7 +197,7 @@ defineExpose({
 
 <template>
   <section
-    id="ill-wave-container"
+    id="illest-wave-container"
     ref="waveformContainer"
     @mousemove="mouseMoveHandler"
     @click="clickHandler"
@@ -206,36 +205,36 @@ defineExpose({
     <transition name="fade">
       <div
         v-show="props.skeleton && !ready"
-        id="ill-skeleton"
+        id="illest-skeleton"
         :style="`background-color: ${skeletonColor}`"
       >
         <div
           v-show="!ready"
-          id="ill-skeleton__load"
+          id="illest-skeleton__load"
           :style="`background-color: ${skeletonColor}`"
         />
       </div>
     </transition>
 
-    <canvas id="ill-wave" ref="waveRef" />
+    <canvas id="illest-wave" ref="waveRef" />
 
     <div
       v-show="ready && props.interact"
-      id="ill-cursor"
+      id="illest-cursor"
       :style="`width:${props.cursorWidth}px; transform: translateX(${moveX}px);background-color: ${props.cursorColor}; `"
     />
   </section>
 </template>
 
 <style scoped>
-#ill-wave-container {
+#illest-wave-container {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
-#ill-wave-container > #ill-skeleton {
+#illest-wave-container > #illest-skeleton {
   position: absolute;
   left: 0;
   top: 0;
@@ -246,7 +245,7 @@ defineExpose({
   z-index: 0;
 }
 
-#ill-wave-container > #ill-skeleton > #ill-skeleton__load {
+#illest-wave-container > #illest-skeleton > #illest-skeleton__load {
   background-image: linear-gradient(
     to right,
     rgba(0, 0, 0, 0) 0%,
@@ -258,13 +257,13 @@ defineExpose({
   animation: skeleton-load 2.5s ease 0s infinite;
 }
 
-#ill-wave-container > #ill-wave {
+#illest-wave-container > #illest-wave {
   width: inherit;
   height: inherit;
   opacity: 0;
 }
 
-#ill-wave-container > #ill-cursor {
+#illest-wave-container > #illest-cursor {
   position: absolute;
   height: inherit;
   left: 0px;
@@ -274,7 +273,7 @@ defineExpose({
   cursor: pointer;
 }
 
-#ill-wave-container:hover #ill-cursor {
+#illest-wave-container:hover #illest-cursor {
   opacity: 1;
 }
 

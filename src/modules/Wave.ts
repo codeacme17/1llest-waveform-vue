@@ -1,4 +1,4 @@
-import type { IllestWaveformProps } from '../../types/waveform'
+import type { IllestWaveformProps } from '../types/waveform'
 
 export default class Wave {
   protected canvasCtx!: CanvasRenderingContext2D

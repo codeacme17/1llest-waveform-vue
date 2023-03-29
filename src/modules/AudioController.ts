@@ -1,5 +1,5 @@
-import WebAudio from './index'
-import type { IllestWaveformProps } from '../../types/waveform'
+import WebAudio from './Audio'
+import type { IllestWaveformProps } from '../types/waveform'
 
 /**
  *  WebAudioController Class creates construct,
