@@ -1,12 +1,12 @@
 import type { IllestWaveformProps } from '../types/waveform'
 
 export default class Wave {
-  protected canvasCtx!: CanvasRenderingContext2D
+  private canvasCtx!: CanvasRenderingContext2D
 
   constructor(
-    protected canvas: HTMLCanvasElement,
-    protected props: IllestWaveformProps,
-    protected filteredData: number[][]
+    private canvas: HTMLCanvasElement,
+    private props: IllestWaveformProps,
+    private filteredData: number[][]
   ) {
     this.canvas = canvas
     this.canvasCtx = this.canvas?.getContext('2d') as CanvasRenderingContext2D
@@ -32,7 +32,7 @@ export default class Wave {
     this.drawCanvasLines()
   }
 
-  protected setCanvasBase(): void {
+  private setCanvasBase(): void {
     this.canvas.width = this.canvas.offsetWidth
     this.canvas.height = this.canvas.offsetHeight
     this.canvas.style.opacity = '1'
@@ -64,17 +64,24 @@ export default class Wave {
   }
 
   private drawMask(maskWidth: number): void {
-    this.canvasCtx.globalCompositeOperation = 'destination-atop'
-    this.canvasCtx.fillStyle = this.props.maskColor as string
-    this.canvasCtx.fillRect(0, 0, maskWidth, this.canvas.height)
+    const { canvas, canvasCtx, props } = this
+    canvasCtx.globalCompositeOperation = 'destination-atop'
+    canvasCtx.fillStyle = props.maskColor as string
+    canvasCtx.fillRect(0, 0, maskWidth, canvas.height)
   }
 
-  public setCanvasStyle(maskWidth: number): void {
-    this.canvasCtx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+  private drawWave(): void {
+    const { canvasCtx, props } = this
+    canvasCtx.lineWidth = props.lineWidth as number
+    canvasCtx.lineCap = props.lineCap as CanvasLineCap
+    canvasCtx.strokeStyle = props.lineColor as string
+    canvasCtx.stroke()
+  }
+
+  public setWaveStyle(maskWidth: number): void {
+    const { canvas, canvasCtx } = this
+    canvasCtx.clearRect(0, 0, canvas.width, canvas.height)
     this.drawMask(maskWidth)
-    this.canvasCtx.lineWidth = this.props.lineWidth as number
-    this.canvasCtx.lineCap = this.props.lineCap as CanvasLineCap
-    this.canvasCtx.strokeStyle = this.props.lineColor as string
-    this.canvasCtx.stroke()
+    this.drawWave()
   }
 }

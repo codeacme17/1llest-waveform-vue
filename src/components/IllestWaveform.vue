@@ -100,7 +100,7 @@ async function initWave(): Promise<void> {
   wave.setupCanvas()
   watchEffect(() => {
     wave._props = props
-    wave.setCanvasStyle(maskWidth.value)
+    wave.setWaveStyle(maskWidth.value)
   })
 }
 
