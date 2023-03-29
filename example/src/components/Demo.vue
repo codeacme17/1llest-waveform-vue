@@ -68,7 +68,7 @@ const finishHandler = (v: boolean) => {
 }
 
 const clickHandler = (el: Ref<HTMLElement>) => {
-  console.log(el)
+  // do something
 }
 
 const play = () => {

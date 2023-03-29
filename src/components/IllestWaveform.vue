@@ -2,7 +2,6 @@
 import { ref, onMounted, watchEffect, onUnmounted } from 'vue'
 import WebAudioController from '../modules/WebAudio/Controller'
 import Wave from '../modules/Wave/index'
-import WaveMask from '../modules/Wave/WaveMask'
 import { formatSecond } from '../utils/format-time'
 import {
   lazyLoader,
@@ -70,19 +69,17 @@ function lazyLoadHandler() {
 
 // initialize
 const waveRef = ref<HTMLCanvasElement | null>(null)
-const maskRef = ref<HTMLCanvasElement | null>(null)
 const ready = ref<boolean>(false)
 
 let webAudioController: WebAudioController
 let wave: Wave
-let waveMask: WaveMask
 
 // initialize waveform
 async function init(): Promise<void> {
   if (ready.value) return
   emits('onInit', true)
   await initAudio()
-  await Promise.all([initWave(), initWaveMask()])
+  await Promise.all([initWave()])
   ready.value = true
   emits('onReady', ready.value)
 }
@@ -104,22 +101,7 @@ async function initWave(): Promise<void> {
   wave.setupCanvas()
   watchEffect(() => {
     wave._props = props
-    wave.setCanvasStyle()
-  })
-}
-
-// initialize wave mask canvas
-async function initWaveMask(): Promise<void> {
-  waveMask = new WaveMask(
-    maskRef.value as HTMLCanvasElement,
-    props,
-    await webAudioController._filterData,
-    wave._canvas
-  )
-  waveMask.setupCanvas()
-  watchEffect(() => {
-    waveMask._props = props
-    waveMask.setCanvasStyle()
+    wave.setCanvasStyle(maskWidth.value)
   })
 }
 
@@ -237,10 +219,6 @@ defineExpose({
 
     <canvas id="ill-wave" ref="waveRef" />
 
-    <div id="ill-waveMask-container" :style="`width:${maskWidth}px;`">
-      <canvas id="ill-waveMask" ref="maskRef" />
-    </div>
-
     <div
       v-show="ready && props.interact"
       id="ill-cursor"
@@ -284,19 +262,6 @@ defineExpose({
   width: inherit;
   height: inherit;
   opacity: 0;
-}
-
-#ill-wave-container > #ill-waveMask-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: inherit;
-  overflow: hidden;
-}
-
-#ill-wave-container > #ill-waveMask-container > #ill-waveMask {
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
 }
 
 #ill-wave-container > #ill-cursor {

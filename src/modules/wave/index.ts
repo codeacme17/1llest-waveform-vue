@@ -36,6 +36,7 @@ export default class Wave {
     this.canvas.width = this.canvas.offsetWidth
     this.canvas.height = this.canvas.offsetHeight
     this.canvas.style.opacity = '1'
+    this.canvasCtx.fillStyle = 'transparent'
     this.canvasCtx.fillRect(0, 0, this.canvas.width, this.canvas.height)
   }
 
@@ -62,8 +63,15 @@ export default class Wave {
     })
   }
 
-  public setCanvasStyle(): void {
+  private drawMask(maskWidth: number): void {
+    this.canvasCtx.globalCompositeOperation = 'destination-atop'
+    this.canvasCtx.fillStyle = this.props.maskColor as string
+    this.canvasCtx.fillRect(0, 0, maskWidth, this.canvas.height)
+  }
+
+  public setCanvasStyle(maskWidth: number): void {
     this.canvasCtx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    this.drawMask(maskWidth)
     this.canvasCtx.lineWidth = this.props.lineWidth as number
     this.canvasCtx.lineCap = this.props.lineCap as CanvasLineCap
     this.canvasCtx.strokeStyle = this.props.lineColor as string
