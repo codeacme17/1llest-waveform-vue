@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, watchEffect, onUnmounted, toRefs } from 'vue'
+import { ref, onMounted, watchEffect, onUnmounted } from 'vue'
 import WebAudioController from '../modules/WebAudio/Controller'
 import Wave from '../modules/Wave/index'
 import WaveMask from '../modules/Wave/WaveMask'
