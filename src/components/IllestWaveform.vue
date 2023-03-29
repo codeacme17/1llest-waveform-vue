@@ -8,6 +8,7 @@ import {
   registerScrollHander,
   canelScrollHander,
 } from '../utils/lazy-load'
+import { read } from 'fs'
 
 type CanvasLineCap = 'butt' | 'round' | 'square'
 
@@ -200,6 +201,7 @@ defineExpose({
   <section
     id="illest-wave-container"
     ref="waveformContainer"
+    :style="`${ready && interact ? 'cursor: pointer' : ''}`"
     @mousemove="mouseMoveHandler"
     @click="clickHandler"
   >
@@ -271,7 +273,6 @@ defineExpose({
   top: 0px;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
-  cursor: pointer;
 }
 
 #illest-wave-container:hover #illest-cursor {
