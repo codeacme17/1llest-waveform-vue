@@ -67,7 +67,7 @@ function lazyLoadHandler() {
   renderTrigger.value = true
 }
 
-// initialize
+// initialize handlers
 const waveRef = ref<HTMLCanvasElement | null>(null)
 const ready = ref<boolean>(false)
 
@@ -83,14 +83,12 @@ async function init(): Promise<void> {
   emits('onReady', ready.value)
 }
 
-// initialize web audio
 async function initAudioController(): Promise<void> {
   audioController = new AudioController(props)
   await audioController.setupAudio()
   watchIsFinish()
 }
 
-// initialize wave canvas
 async function initWave(): Promise<void> {
   wave = new Wave(
     waveRef.value as HTMLCanvasElement,
