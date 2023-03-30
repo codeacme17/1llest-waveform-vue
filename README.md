@@ -155,14 +155,15 @@ import "1llest-waveform-vue/lib/style.css"
 
 > When using the following events, you need to add the `on-` prefix in front, such as `@on-init="initHandler"` 
 
-| event  | description                                                  | params             |
-| :----- | :----------------------------------------------------------- | :----------------- |
-| init   | the hook event before the waveform starts to initialize      | `Boolean`          |
-| ready  | the hook event triggered after the waveform completes all initialization and rendering to the page | `Boolean`          |
-| play   | event fired when playback starts                             | `Boolean`          |
-| pause  | event fired when playback is paused                          | `Boolean`          |
-| finish | the event triggered when the playback is completed (the playback completion refers to the completion of the entire audio) | `Boolean`          |
-| click  | event triggered when waveform is clicked                     | `Ref<HTMLElement>` |
+| event   | description                                                  | params             |
+| :------ | :----------------------------------------------------------- | :----------------- |
+| init    | the hook event before the waveform starts to initialize      | `Boolean`          |
+| fetched | the hook event after accepting the audio file                | `Boolean`          |
+| ready   | the hook event triggered after the waveform completes all initialization and rendering to the page | `Boolean`          |
+| play    | event fired when playback starts                             | `Boolean`          |
+| pause   | event fired when playback is paused                          | `Boolean`          |
+| finish  | the event triggered when the playback is completed (the playback completion refers to the completion of the entire audio) | `Boolean`          |
+| click   | event triggered when waveform is clicked                     | `Ref<HTMLElement>` |
 
 ### Methods
 
