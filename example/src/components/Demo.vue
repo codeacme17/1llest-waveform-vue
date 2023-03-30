@@ -48,6 +48,7 @@ onMounted(() => {
 })
 
 const init = ref(false)
+const fetched = ref(false)
 const playing = ref(false)
 const finished = ref(false)
 const ready = ref(false)
@@ -56,6 +57,10 @@ const durationTime = ref('0:00')
 
 const initHandler = (v: boolean) => {
   init.value = v
+}
+
+const fetchedHandler = (v: boolean) => {
+  fetched.value = v
 }
 
 const readyHandler = (v: boolean) => {
@@ -103,6 +108,7 @@ const getDuration = () => {
         ref="waveformRef"
         v-bind="waveOptions"
         @on-init="initHandler"
+        @on-fetched="fetchedHandler"
         @on-ready="readyHandler"
         @on-play="(v: boolean) => (playing = v)"
         @on-pause="(v: boolean) => (playing = v)"
@@ -112,6 +118,30 @@ const getDuration = () => {
     </div>
 
     <div class="flex mt-2 items-end">
+      <div
+        class="flex items-center w-28"
+        :class="`${fetched ? '' : 'animate-pulse'}`"
+      >
+        <span
+          class="tag"
+          :class="`${
+            fetched ? 'bg-green-600 dark:bg-green-400' : 'bg-gray-400'
+          }`"
+        />
+        {{ fetched ? 'fetched' : 'fetching' }}
+      </div>
+
+      <div
+        class="flex items-center w-28"
+        :class="`${ready ? '' : 'animate-pulse'}`"
+      >
+        <span
+          class="tag"
+          :class="`${ready ? 'bg-green-600 dark:bg-green-400' : 'bg-gray-400'}`"
+        />
+        {{ ready ? 'ready' : 'rendering' }}
+      </div>
+
       <div class="ml-auto">
         <span class="text-neutral-400">{{ currentTime }}</span> /
         <strong>{{ durationTime }}</strong>
@@ -120,7 +150,7 @@ const getDuration = () => {
       <div class="ml-5">
         <button
           v-show="!playing && !finished"
-          class="btn text-[#3e6bff]"
+          class="text-[#3e6bff]"
           @click="play"
         >
           <PlayIcon />
@@ -129,14 +159,14 @@ const getDuration = () => {
 
         <button
           v-show="playing && !finished"
-          class="btn text-yellow-500"
+          class="text-yellow-500"
           @click="pause"
         >
           <PauseIcon />
           <div>PAUSE</div>
         </button>
 
-        <button v-show="finished" class="btn text-green-500" @click="replay">
+        <button v-show="finished" class="text-green-500" @click="replay">
           <ReplayIcon />
           <div>REPLAY</div>
         </button>
@@ -146,7 +176,11 @@ const getDuration = () => {
 </template>
 
 <style scoped lang="scss">
-.btn {
+.tag {
+  @apply inline-flex h-2 w-2 mr-2 rounded-full opacity-75;
+}
+
+button {
   @apply flex items-center bg-neutral-200 dark:bg-neutral-700 px-5 py-1 rounded-sm;
 
   & div {

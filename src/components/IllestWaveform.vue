@@ -85,6 +85,8 @@ async function init(): Promise<void> {
 
 async function initAudioController(): Promise<void> {
   audioController = new AudioController(props)
+  await audioController.fetchAudioFile()
+  emits('onFetched', true)
   await audioController.setupAudio()
   watchIsFinish()
 }
@@ -177,6 +179,7 @@ function getDuration(): string {
 
 const emits = defineEmits([
   'onInit', // start init hook
+  'onFetched', // fetched audio file
   'onReady', // ready to play, rended
   'onPlay', // start play hook
   'onPause', // pause hook

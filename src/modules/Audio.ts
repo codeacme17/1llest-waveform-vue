@@ -12,6 +12,7 @@ export default class WebAudio {
   protected audioBuffer!: AudioBuffer
   protected audioBufferSourceNode!: AudioBufferSourceNode
   private filterData!: number[][]
+  private response!: Response
 
   constructor(props: IllestWaveformProps) {
     this.props = props
@@ -33,9 +34,16 @@ export default class WebAudio {
     this.createFilterData()
   }
 
+  public async fetchAudioFile(): Promise<void> {
+    try {
+      this.response = await fetch(this.props.url)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   private async createAudioBuffer(): Promise<void> {
-    const response: Response = await fetch(this.props.url)
-    const arrayBuffer: ArrayBuffer = await response.arrayBuffer()
+    const arrayBuffer: ArrayBuffer = await this.response.arrayBuffer()
     this.audioBuffer = await this.audioCtx.decodeAudioData(arrayBuffer)
   }
 
