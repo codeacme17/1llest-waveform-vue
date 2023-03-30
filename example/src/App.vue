@@ -17,8 +17,7 @@ const toggleDark = useToggle(isDark)
 const items = reactive<Props[]>([
   {
     id: nanoid(),
-    // url: `${import.meta.env.BASE_URL}audios/loop-1.mp3`,
-    url: 'https://wavesurfer-js.org/example/media/demo.wav',
+    url: `${import.meta.env.BASE_URL}audios/loop-1.mp3`,
   },
   {
     id: nanoid(),
