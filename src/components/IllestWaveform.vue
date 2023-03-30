@@ -71,23 +71,22 @@ function lazyLoadHandler() {
 const waveRef = ref<HTMLCanvasElement | null>(null)
 const ready = ref<boolean>(false)
 
-let webAudioController: AudioController
+let audioController: AudioController
 let wave: Wave
 
-// initialize waveform
 async function init(): Promise<void> {
   if (ready.value) return
   emits('onInit', true)
-  await initAudio()
-  await Promise.all([initWave()])
+  await initAudioController()
+  await initWave()
   ready.value = true
   emits('onReady', ready.value)
 }
 
 // initialize web audio
-async function initAudio(): Promise<void> {
-  webAudioController = new AudioController(props)
-  await webAudioController.setupAudio()
+async function initAudioController(): Promise<void> {
+  audioController = new AudioController(props)
+  await audioController.setupAudio()
   watchIsFinish()
 }
 
@@ -96,7 +95,7 @@ async function initWave(): Promise<void> {
   wave = new Wave(
     waveRef.value as HTMLCanvasElement,
     props,
-    await webAudioController._filterData
+    audioController._filterData
   )
   wave.setupCanvas()
   watchEffect(() => {
@@ -105,17 +104,17 @@ async function initWave(): Promise<void> {
   })
 }
 
-// Waveform handlers
+// wave handlers
 const moveX = ref<number>(0)
 const currentTime = ref<number>(0)
 const maskWidth = ref<number>(0)
 
 function drawWaveMask(): void | undefined {
-  if (!webAudioController._playing) return
+  if (!audioController._playing) return
   requestAnimationFrame(drawWaveMask)
-  currentTime.value = webAudioController._currentTime
+  currentTime.value = audioController._currentTime
   maskWidth.value =
-    (currentTime.value / webAudioController._audioDuration) * wave._canvas.width
+    (currentTime.value / audioController._audioDuration) * wave._canvas.width
 }
 
 function mouseMoveHandler(e: any): void {
@@ -130,30 +129,30 @@ function clickHandler(): void {
   if (!ready.value || !props.interact) return
   maskWidth.value = moveX.value
   const pickedTime: number =
-    (moveX.value / wave._canvas.width) * webAudioController._audioDuration
-  webAudioController.pick(pickedTime)
+    (moveX.value / wave._canvas.width) * audioController._audioDuration
+  audioController.pick(pickedTime)
   currentTime.value = pickedTime
   emits('onClick', waveformContainer)
   emits('onFinish', false)
 }
 
-// Audio handlers
+// audio handlers
 function play(): void {
   if (!ready.value) return
-  webAudioController.play()
+  audioController.play()
   emits('onPlay', true)
   drawWaveMask()
 }
 
 function replay(): void {
-  webAudioController.replay()
+  audioController.replay()
   emits('onFinish', false)
   emits('onPlay', true)
   drawWaveMask()
 }
 
 function pause(): void {
-  webAudioController.pause()
+  audioController.pause()
   emits('onPause', false)
 }
 
@@ -163,7 +162,7 @@ function finish(): void {
 
 function watchIsFinish(): void {
   watchEffect(() => {
-    if (currentTime.value < webAudioController._audioDuration) return
+    if (currentTime.value < audioController._audioDuration) return
     pause()
     finish()
   })
@@ -174,7 +173,7 @@ function getCurrentTime(): string {
 }
 
 function getDuration(): string {
-  const duration = webAudioController._audioDuration
+  const duration = audioController._audioDuration
   return formatSecond(duration)
 }
 

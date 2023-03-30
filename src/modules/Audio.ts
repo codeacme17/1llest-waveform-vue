@@ -11,14 +11,15 @@ export default class WebAudio {
   protected audioCtx: AudioContext
   protected audioBuffer!: AudioBuffer
   protected audioBufferSourceNode!: AudioBufferSourceNode
+  private filterData!: number[][]
 
   constructor(props: IllestWaveformProps) {
     this.props = props
     this.audioCtx = new AudioContext()
   }
 
-  get _filterData(): Promise<number[][]> {
-    return this.createFilterData()
+  get _filterData(): number[][] {
+    return this.filterData
   }
 
   get _audioDuration(): number {
@@ -29,6 +30,7 @@ export default class WebAudio {
 
   public async setupAudio(): Promise<void> {
     await this.createAudioBuffer()
+    this.createFilterData()
   }
 
   private async createAudioBuffer(): Promise<void> {
@@ -37,7 +39,7 @@ export default class WebAudio {
     this.audioBuffer = await this.audioCtx.decodeAudioData(arrayBuffer)
   }
 
-  private createFilterData(): Promise<number[][]> {
+  private createFilterData(): void {
     const samplingRate: number = this.props.samplingRate as number
     const channels: number = this.audioBuffer.numberOfChannels
     const rawDataList: Float32Array[] = []
@@ -56,7 +58,7 @@ export default class WebAudio {
       filteredData.push(temp)
     }
 
-    return Promise.resolve(filteredData)
+    this.filterData = filteredData
   }
 
   protected connectDestination(): void {
