@@ -53,9 +53,14 @@ const items = reactive<Props[]>([
   },
 ])
 
+const mono = useStorage('mono', true)
 const skeleton = useStorage('skeleton', true)
 const interact = useStorage('interact', true)
 const lazy = useStorage('lazy', true)
+
+const toggleMono = () => {
+  mono.value = !mono.value
+}
 
 const toggleInteract = () => {
   interact.value = !interact.value
@@ -67,6 +72,15 @@ const toggleSkeleton = () => {
 
 const toggleLazy = () => {
   lazy.value = !lazy.value
+}
+
+const childs = reactive<(typeof Demo)[]>([])
+
+const playHandler = (id: string) => {
+  if (!mono.value) return
+  childs.forEach((child) => {
+    if (child.id !== id && child.playing) child.pause()
+  })
 }
 </script>
 
@@ -87,6 +101,11 @@ const toggleLazy = () => {
         <div>{{ isDark ? 'dark' : 'light' }}</div>
       </button>
 
+      <button @click="toggleMono()">
+        <span :class="{ 'bg-green-500': mono }" />
+        <div>mono</div>
+      </button>
+
       <button @click="toggleInteract()">
         <span :class="{ 'bg-green-500': interact }" />
         <div>interact</div>
@@ -105,11 +124,14 @@ const toggleLazy = () => {
 
     <Demo
       v-for="item in items"
+      :id="item.id"
+      ref="childs"
       :key="item.id"
       :url="item.url"
       :interact="interact"
       :skeleton="skeleton"
       :lazy="lazy"
+      @play="playHandler"
     />
   </section>
 </template>
