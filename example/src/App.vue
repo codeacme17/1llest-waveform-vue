@@ -53,13 +53,13 @@ const items = reactive<Props[]>([
   },
 ])
 
-const mono = useStorage('mono', true)
+const solo = useStorage('solo', true)
 const skeleton = useStorage('skeleton', true)
 const interact = useStorage('interact', true)
 const lazy = useStorage('lazy', true)
 
 const toggleMono = () => {
-  mono.value = !mono.value
+  solo.value = !solo.value
 }
 
 const toggleInteract = () => {
@@ -77,7 +77,7 @@ const toggleLazy = () => {
 const childs = reactive<(typeof Demo)[]>([])
 
 const playHandler = (id: string) => {
-  if (!mono.value) return
+  if (!solo.value) return
   childs.forEach((child) => {
     if (child.id !== id && child.playing) child.pause()
   })
@@ -102,8 +102,8 @@ const playHandler = (id: string) => {
       </button>
 
       <button @click="toggleMono()">
-        <span :class="{ 'bg-green-500': mono }" />
-        <div>mono</div>
+        <span :class="{ 'bg-green-500': solo }" />
+        <div>solo</div>
       </button>
 
       <button @click="toggleInteract()">
