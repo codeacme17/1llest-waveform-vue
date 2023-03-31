@@ -185,6 +185,53 @@ import "1llest-waveform-vue/lib/style.css"
 
 
 
+## Advanced usage
+
+### Solo play
+
+If you want to render a list of waveforms, then you definitely want to play only one track at a time. My component does not provide this feature, because it is just an independent component, which is uncontrollable for other waveform components. So you can easily achieve this requirement by borrowing some features of vue.
+
+
+1. You can expose some methods and properties in your `child` components that encapsulate the 1llestWaveform component,
+```js
+// Demo.vue
+const play = () => {
+  emits('play', props.id)
+  waveformRef.value!.play()
+}
+
+const emits = defineEmits(['play'])
+
+defineExpose({
+  pause,
+  playing,
+  id: props.id,
+})
+```
+2. Your `parent` component can have the following configuration
+```vue
+// App.vue
+<Demo
+  v-for="item in items"
+  ref="childs"
+  :id="item.id"
+  :key="item.id"
+  @play="playHandler"
+/>
+```
+```js
+const childs = reactive<(typeof Demo)[]>([])
+
+const playHandler = (id: string) => {
+  childs.forEach((child) => {
+    if (child.id !== id && child.playing) child.pause()
+  })
+}
+```
+You can define any unique identifier to replace the `id` attribute in `child.id !== id`, but please make sure that this attribute **exists** in the child component and **expose** it, the most important thing is that it **represents the component uniqueness**
+> The above code can be found in the [example](https://github.com/codeacme17/1llest-waveform-vue/tree/main/example) folder. If you have a better way to implement this feature, please suggest it in an [issue](https://github.com/codeacme17/1llest-waveform-vue/issues/new/choose), I will be very grateful
+
+
 ## Contributing
 
 Contributions to the project are welcome! If you find a bug or have an idea for a new feature, please submit an issue or pull request.
