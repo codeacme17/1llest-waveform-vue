@@ -111,6 +111,7 @@ const maskWidth = ref<number>(0)
 
 function drawWaveMask(): void | undefined {
   if (!audioController._playing) return
+
   requestAnimationFrame(drawWaveMask)
   currentTime.value = audioController._currentTime
   maskWidth.value =
@@ -127,6 +128,7 @@ function mouseMoveHandler(e: any): void {
 
 function clickHandler(): void {
   if (!ready.value || !props.interact) return
+
   maskWidth.value = moveX.value
   const pickedTime: number =
     (moveX.value / wave._canvas.width) * audioController._audioDuration
@@ -157,13 +159,14 @@ function pause(): void {
 }
 
 function finish(): void {
+  audioController.finish()
+  emits('onPlay', false)
   emits('onFinish', true)
 }
 
 function watchIsFinish(): void {
   watchEffect(() => {
-    if (currentTime.value < audioController._audioDuration) return
-    pause()
+    if (currentTime.value <= audioController._audioDuration) return
     finish()
   })
 }

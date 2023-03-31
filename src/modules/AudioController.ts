@@ -48,8 +48,6 @@ export default class WebAudioController extends WebAudio {
   }
 
   public pick(pickedTime: number): void {
-    if (pickedTime <= 0) pickedTime = 0
-    if (pickedTime >= this._audioDuration) pickedTime = this._audioDuration
     this.pickAt = pickedTime
     if (!this.playing) return
     this.stopSource()
@@ -59,6 +57,11 @@ export default class WebAudioController extends WebAudio {
   public replay(): void {
     if (this.audioBufferSourceNode) this.stop()
     this.play()
+  }
+
+  public finish(): void {
+    this.pauseAt = 0
+    this.stop()
   }
 
   private stop(): void {
