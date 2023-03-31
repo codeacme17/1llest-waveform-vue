@@ -49,14 +49,13 @@ export default class WebAudio {
 
   private createFilterData(): void {
     const samplingRate: number = this.props.samplingRate as number
-    const rawDataList: Float32Array[] = []
     const filteredData: number[] = []
 
-    rawDataList.push(this.audioBuffer.getChannelData(0))
+    const rawDataList: Float32Array = this.audioBuffer.getChannelData(0)
 
     for (let index = 0; index < samplingRate; index++) {
-      const blockSize = Math.floor(rawDataList[0].length / samplingRate)
-      const temp = rawDataList[0][index * blockSize]
+      const blockSize = Math.floor(rawDataList.length / samplingRate)
+      const temp = rawDataList[index * blockSize]
       filteredData.push(temp)
     }
 
