@@ -53,9 +53,10 @@ import "1llest-waveform-vue/lib/style.css"
 ```vue
 <template>
   <IllestWaveform
-    ref="waveform_ref"
+    ref="waveformRef"
     v-bind="waveOptions"
     @on-init="initHandler"
+    @on-fetched="fetchedHandler"
     @on-ready="readyHandler"
     @on-play="(v: boolean) => (playing = v)"
     @on-pause="(v: boolean) => (playing = v)"
@@ -76,13 +77,14 @@ import "1llest-waveform-vue/lib/style.css"
     url: "example.mp3"
   })
 
-  const waveform_ref = ref<typeof IllestWaveform | null>(null)
+  const waveformRef = ref<typeof IllestWaveform | null>(null)
 
   onMounted(() => {
     getCurrentTime()
   })
 
   const init = ref(false)
+  const fetched = ref(false)
   const playing = ref(false)
   const finished = ref(false)
   const ready = ref(false)
@@ -91,6 +93,10 @@ import "1llest-waveform-vue/lib/style.css"
 
   const initHandler = (v: boolean) => {
     init.value = v
+  }
+  
+  const fetchedHandler = (v: boolean) => {
+    fetched.value = v
   }
 
   const readyHandler = (v: boolean) => {
@@ -107,26 +113,26 @@ import "1llest-waveform-vue/lib/style.css"
   }
 
   const play = () => {
-    waveform_ref.value!.play()
+    waveformRef.value!.play()
   }
 
   const replay = () => {
-    waveform_ref.value!.replay()
+    waveformRef.value!.replay()
   }
 
   const pause = () => {
-    waveform_ref.value!.pause()
+    waveformRef.value!.pause()
   }
 
   const getCurrentTime = () => {
     watchEffect(() => {
-      const current = waveform_ref.value!.getCurrentTime()
+      const current = waveformRef.value!.getCurrentTime()
       currentTime.value = current
     })
   }
 
   const getDuration = () => {
-    const duration = waveform_ref.value!.getDuration()
+    const duration = waveformRef.value!.getDuration()
     durationTime.value = duration
   }
 </script>
