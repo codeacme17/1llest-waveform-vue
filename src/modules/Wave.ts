@@ -6,7 +6,7 @@ export default class Wave {
   constructor(
     private canvas: HTMLCanvasElement,
     private props: IllestWaveformProps,
-    private filteredData: number[][]
+    private filteredData: number[]
   ) {
     this.canvas = canvas
     this.canvasCtx = this.canvas?.getContext('2d') as CanvasRenderingContext2D
@@ -49,16 +49,16 @@ export default class Wave {
 
   private drawCanvasLines(): void {
     const { canvas, canvasCtx, filteredData } = this
-    filteredData.forEach((items: number[], index: number) => {
+    filteredData.forEach((item: number, index: number) => {
       const singleLineWidth = canvas.width / filteredData.length
       const x = singleLineWidth * index - singleLineWidth / 2
       canvasCtx.moveTo(
         x,
-        canvas.height / 2 - Math.abs(items[0]) * canvas.height * 0.4
+        canvas.height / 2 - Math.abs(item) * canvas.height * 0.4
       )
       canvasCtx.lineTo(
         x,
-        canvas.height / 2 + Math.abs(items[0]) * canvas.height * 0.4
+        canvas.height / 2 + Math.abs(item) * canvas.height * 0.4
       )
     })
   }

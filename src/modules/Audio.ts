@@ -11,7 +11,7 @@ export default class WebAudio {
   protected audioCtx: AudioContext
   protected audioBuffer!: AudioBuffer
   protected audioBufferSourceNode!: AudioBufferSourceNode
-  private filterData!: number[][]
+  private filteredData!: number[]
   private arrayBuffer!: ArrayBuffer
 
   constructor(props: IllestWaveformProps) {
@@ -19,8 +19,8 @@ export default class WebAudio {
     this.audioCtx = new AudioContext()
   }
 
-  get _filterData(): number[][] {
-    return this.filterData
+  get _filteredData(): number[] {
+    return this.filteredData
   }
 
   get _audioDuration(): number {
@@ -49,24 +49,18 @@ export default class WebAudio {
 
   private createFilterData(): void {
     const samplingRate: number = this.props.samplingRate as number
-    const channels: number = this.audioBuffer.numberOfChannels
     const rawDataList: Float32Array[] = []
-    const filteredData: number[][] = []
+    const filteredData: number[] = []
 
-    for (let channel = 0; channel < channels; channel++) {
-      rawDataList.push(this.audioBuffer.getChannelData(channel))
-    }
+    rawDataList.push(this.audioBuffer.getChannelData(0))
 
     for (let index = 0; index < samplingRate; index++) {
-      const temp = [0, 0]
-      for (let channel = 0; channel < channels; channel++) {
-        const blockSize = Math.floor(rawDataList[channel].length / samplingRate)
-        temp[channel] = rawDataList[channel][index * blockSize]
-      }
+      const blockSize = Math.floor(rawDataList[0].length / samplingRate)
+      const temp = rawDataList[0][index * blockSize]
       filteredData.push(temp)
     }
 
-    this.filterData = filteredData
+    this.filteredData = filteredData
   }
 
   protected connectDestination(): void {

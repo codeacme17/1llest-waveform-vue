@@ -98,7 +98,7 @@ async function initWave(): Promise<void> {
   wave = new Wave(
     waveRef.value as HTMLCanvasElement,
     props,
-    audioController._filterData
+    audioController._filteredData
   )
   wave.setupCanvas()
   watchEffect(() => {
