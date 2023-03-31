@@ -43,13 +43,13 @@ const props = withDefaults(defineProps<IllestWaveformProps>(), {
 // Render trigger can control the render time
 // of current waveform
 const renderTrigger = ref<boolean>(false)
-const waveformContainer = ref<HTMLElement | null>(null)
+const __illestWaveformRef__ = ref<HTMLElement | null>(null)
 
 onMounted(async () => {
   if (props.lazy) {
-    lazyLoader(waveformContainer.value as HTMLElement, lazyLoadHandler)
+    lazyLoader(__illestWaveformRef__.value as HTMLElement, lazyLoadHandler)
     registerScrollHander(
-      waveformContainer.value as HTMLElement,
+      __illestWaveformRef__.value as HTMLElement,
       lazyLoadHandler
     )
     watchEffect(async () => {
@@ -60,7 +60,10 @@ onMounted(async () => {
 
 onUnmounted(() => {
   if (props.lazy)
-    canelScrollHander(waveformContainer.value as HTMLElement, lazyLoadHandler)
+    canelScrollHander(
+      __illestWaveformRef__.value as HTMLElement,
+      lazyLoadHandler
+    )
 })
 
 function lazyLoadHandler() {
@@ -134,7 +137,7 @@ function clickHandler(): void {
     (moveX.value / wave._canvas.width) * audioController._audioDuration
   audioController.pick(pickedTime)
   currentTime.value = pickedTime
-  emits('onClick', waveformContainer)
+  emits('onClick', __illestWaveformRef__)
   emits('onFinish', false)
 }
 
@@ -201,8 +204,8 @@ defineExpose({
 
 <template>
   <section
-    id="illest-wave-container"
-    ref="waveformContainer"
+    id="illest-waveform"
+    ref="__illestWaveformRef__"
     :style="`${ready && interact ? 'cursor: pointer' : ''}`"
     @mousemove="mouseMoveHandler"
     @click="clickHandler"
@@ -210,36 +213,36 @@ defineExpose({
     <transition name="fade">
       <div
         v-show="props.skeleton && !ready"
-        id="illest-skeleton"
+        id="illest-waveform__skeleton"
         :style="`background-color: ${skeletonColor}`"
       >
         <div
           v-show="!ready"
-          id="illest-skeleton__load"
+          id="illest-waveform__skeleton__load"
           :style="`background-color: ${skeletonColor}`"
         />
       </div>
     </transition>
 
-    <canvas id="illest-wave" ref="waveRef" />
+    <canvas id="illest-waveform__view" ref="waveRef" />
 
     <div
       v-show="ready && props.interact"
-      id="illest-cursor"
+      id="illest-waveform__cursor"
       :style="`width:${props.cursorWidth}px; transform: translateX(${moveX}px);background-color: ${props.cursorColor}; `"
     />
   </section>
 </template>
 
 <style scoped>
-#illest-wave-container {
+#illest-waveform {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
-#illest-wave-container > #illest-skeleton {
+#illest-waveform > #illest-waveform__skeleton {
   position: absolute;
   left: 0;
   top: 0;
@@ -250,7 +253,9 @@ defineExpose({
   z-index: 0;
 }
 
-#illest-wave-container > #illest-skeleton > #illest-skeleton__load {
+#illest-waveform
+  > #illest-waveform__skeleton
+  > #illest-waveform__skeleton__load {
   background-image: linear-gradient(
     to right,
     rgba(0, 0, 0, 0) 0%,
@@ -262,13 +267,13 @@ defineExpose({
   animation: skeleton-load 2.5s ease 0s infinite;
 }
 
-#illest-wave-container > #illest-wave {
+#illest-waveform > #illest-waveform__view {
   width: inherit;
   height: inherit;
   opacity: 0;
 }
 
-#illest-wave-container > #illest-cursor {
+#illest-waveform > #illest-waveform__cursor {
   position: absolute;
   height: inherit;
   left: 0px;
@@ -277,7 +282,7 @@ defineExpose({
   transition: opacity 0.2s ease-in-out;
 }
 
-#illest-wave-container:hover #illest-cursor {
+#illest-waveform:hover #illest-waveform__cursor {
   opacity: 1;
 }
 
