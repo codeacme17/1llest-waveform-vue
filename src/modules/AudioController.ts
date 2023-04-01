@@ -13,6 +13,7 @@ export default class WebAudioController extends WebAudio {
   private pauseAt: number
   private pickAt: number
   private playing: boolean
+  private audioBufferSourceNode!: AudioBufferSourceNode | null
 
   constructor(props: IllestWaveformProps) {
     super(props)
@@ -33,9 +34,12 @@ export default class WebAudioController extends WebAudio {
   }
 
   public play(): void {
-    const offset = this.pickAt ? this.pickAt : this.pauseAt
+    this.audioBufferSourceNode && this.disconnectDestination()
+    this.createAudioBufferSourceNode()
     this.connectDestination()
-    this.audioBufferSourceNode.start(0, offset)
+
+    const offset = this.pickAt ? this.pickAt : this.pauseAt
+    this.audioBufferSourceNode!.start(0, offset)
     this.startAt = this.audioCtx.currentTime - offset
     this.pauseAt = 0
     this.playing = true
@@ -43,35 +47,30 @@ export default class WebAudioController extends WebAudio {
 
   public pause(): void {
     const elapsed = this.audioCtx.currentTime - this.startAt
-    this.stop()
+    this.disconnectDestination()
+    this.initializeState()
     this.pauseAt = elapsed
   }
 
   public pick(pickedTime: number): void {
     this.pickAt = pickedTime
     if (!this.playing) return
-    this.stopSource()
+    this.disconnectDestination()
     this.play()
   }
 
   public replay(): void {
-    if (this.audioBufferSourceNode) this.stop()
+    if (this.audioBufferSourceNode) {
+      this.disconnectDestination()
+      this.initializeState()
+    }
     this.play()
   }
 
   public finish(): void {
     this.pauseAt = 0
-    this.stop()
-  }
-
-  private stop(): void {
-    this.stopSource()
-    this.initializeState()
-  }
-
-  private stopSource() {
     this.disconnectDestination()
-    this.audioBufferSourceNode.stop()
+    this.initializeState()
   }
 
   private initializeState() {
@@ -79,5 +78,22 @@ export default class WebAudioController extends WebAudio {
     this.startAt = 0
     this.pauseAt = 0
     this.pickAt = 0
+  }
+
+  protected connectDestination(): void {
+    this.audioBufferSourceNode!.connect(this.audioCtx.destination)
+  }
+
+  private createAudioBufferSourceNode(): void {
+    if (this.audioBufferSourceNode) return
+    this.audioBufferSourceNode = this.audioCtx.createBufferSource()
+    this.audioBufferSourceNode.buffer = this.audioBuffer
+  }
+
+  protected disconnectDestination(): void {
+    if (!this.audioBufferSourceNode) return
+    this.audioBufferSourceNode.disconnect()
+    this.audioBufferSourceNode.stop()
+    this.audioBufferSourceNode = null
   }
 }

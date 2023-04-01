@@ -16,6 +16,7 @@ module.exports = {
   rules: {
     'space-before-function-paren': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off',
     'vue/no-setup-props-destructure': 'off',
     'vue/multi-word-component-names': 'off',
   },

@@ -10,7 +10,6 @@ export default class WebAudio {
   protected props: IllestWaveformProps
   protected audioCtx: AudioContext
   protected audioBuffer!: AudioBuffer
-  protected audioBufferSourceNode!: AudioBufferSourceNode
   private filteredData!: number[]
   private arrayBuffer!: ArrayBuffer
 
@@ -60,20 +59,5 @@ export default class WebAudio {
     }
 
     this.filteredData = filteredData
-  }
-
-  protected connectDestination(): void {
-    this.createAudioBufferSourceNode()
-    this.disconnectDestination()
-    this.audioBufferSourceNode.connect(this.audioCtx.destination)
-  }
-
-  private createAudioBufferSourceNode(): void {
-    this.audioBufferSourceNode = this.audioCtx.createBufferSource()
-    this.audioBufferSourceNode.buffer = this.audioBuffer
-  }
-
-  protected disconnectDestination(): void {
-    if (this.audioBufferSourceNode) this.audioBufferSourceNode.disconnect()
   }
 }
