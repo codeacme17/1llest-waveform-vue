@@ -99,7 +99,7 @@ const playHandler = (id: string) => {
       </span>
     </h1>
 
-    <button class="mb-3" @click="toggleDark()">
+    <button class="mb-5" @click="toggleDark()">
       <SunIcon v-show="!isDark" class="w-5" />
       <MoonIcon v-show="isDark" class="w-5" />
       <div>{{ isDark ? 'dark' : 'light' }}</div>
