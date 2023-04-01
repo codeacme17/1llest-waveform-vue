@@ -156,6 +156,7 @@ import "1llest-waveform-vue/lib/style.css"
 | skeleton      | whether to enable the skeleton during waveform loading       | `Boolean`       | `true`    |
 | skeletonColor | the color of the skeleton                                    | `String`        | `#232323` |
 | interact      | indicates whether you want the user to interact with the waveform | `Boolean`       | `true`    |
+| fade          | achieve fade-in and fade-out effects when playing and pausing audio | `Boolean`       | `true`    |
 
 ### Events
 
