@@ -12,6 +12,7 @@ export default class WebAudio {
   protected audioBuffer!: AudioBuffer
   private filteredData!: number[]
   private arrayBuffer!: ArrayBuffer
+  protected gainNode!: GainNode
 
   constructor(props: IllestWaveformProps) {
     this.props = props
@@ -31,6 +32,7 @@ export default class WebAudio {
   public async setupAudio(): Promise<void> {
     await this.createAudioBuffer()
     this.createFilterData()
+    this.createGainNode()
   }
 
   public async fetchAudioFile(): Promise<void> {
@@ -44,6 +46,11 @@ export default class WebAudio {
 
   private async createAudioBuffer(): Promise<void> {
     this.audioBuffer = await this.audioCtx.decodeAudioData(this.arrayBuffer)
+  }
+
+  private createGainNode(): void {
+    this.gainNode = this.audioCtx.createGain()
+    this.gainNode.gain.setValueAtTime(0, this.audioCtx.currentTime)
   }
 
   private createFilterData(): void {

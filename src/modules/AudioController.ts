@@ -14,6 +14,7 @@ export default class WebAudioController extends WebAudio {
   private pickAt: number
   private playing: boolean
   private audioBufferSourceNode!: AudioBufferSourceNode | null
+  private FADE_OUT_TIME: number
 
   constructor(props: IllestWaveformProps) {
     super(props)
@@ -21,6 +22,7 @@ export default class WebAudioController extends WebAudio {
     this.pauseAt = 0
     this.pickAt = 0
     this.playing = false
+    this.FADE_OUT_TIME = 0.2
   }
 
   get _playing(): boolean {
@@ -34,7 +36,7 @@ export default class WebAudioController extends WebAudio {
   }
 
   public play(): void {
-    this.audioBufferSourceNode && this.disconnectDestination()
+    this.disconnectDestination()
     this.createAudioBufferSourceNode()
     this.connectDestination()
 
@@ -43,13 +45,25 @@ export default class WebAudioController extends WebAudio {
     this.startAt = this.audioCtx.currentTime - offset
     this.pauseAt = 0
     this.playing = true
+
+    this.gainNode.gain.setValueAtTime(0, this.audioCtx.currentTime)
+    this.gainNode.gain.linearRampToValueAtTime(
+      1,
+      this.audioCtx.currentTime + this.FADE_OUT_TIME
+    )
   }
 
   public pause(): void {
     const elapsed = this.audioCtx.currentTime - this.startAt
+
     this.disconnectDestination()
     this.initializeState()
+
     this.pauseAt = elapsed
+    this.gainNode.gain.linearRampToValueAtTime(
+      0,
+      this.audioCtx.currentTime + this.FADE_OUT_TIME
+    )
   }
 
   public pick(pickedTime: number): void {
@@ -80,14 +94,16 @@ export default class WebAudioController extends WebAudio {
     this.pickAt = 0
   }
 
-  protected connectDestination(): void {
-    this.audioBufferSourceNode!.connect(this.audioCtx.destination)
-  }
-
   private createAudioBufferSourceNode(): void {
     if (this.audioBufferSourceNode) return
     this.audioBufferSourceNode = this.audioCtx.createBufferSource()
     this.audioBufferSourceNode.buffer = this.audioBuffer
+  }
+
+  protected connectDestination(): void {
+    if (!this.audioBufferSourceNode) return
+    this.audioBufferSourceNode.connect(this.gainNode)
+    this.gainNode.connect(this.audioCtx.destination)
   }
 
   protected disconnectDestination(): void {
