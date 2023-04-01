@@ -14,7 +14,6 @@ type IllestWaveformProps = {
   skeletonColor?: string
   interact?: boolean | Ref<boolean>
   fade?: boolean | Ref<boolean>
-  fadeDuration?: number
 }
 
 export default IllestWaveformProps

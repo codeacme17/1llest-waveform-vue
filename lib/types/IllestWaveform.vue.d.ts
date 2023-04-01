@@ -13,7 +13,6 @@ declare const _default: import("vue").DefineComponent<__VLS_WithDefaults<__VLS_T
     skeletonColor?: string | undefined;
     interact?: boolean | Ref<boolean> | undefined;
     fade?: boolean | Ref<boolean> | undefined;
-    fadeDuration?: number | undefined;
 }>, {
     lineWidth: number;
     lineCap: string;
@@ -27,7 +26,6 @@ declare const _default: import("vue").DefineComponent<__VLS_WithDefaults<__VLS_T
     skeletonColor: string;
     interact: boolean;
     fade: boolean;
-    fadeDuration: number;
 }>, {
     play: () => void;
     pause: () => void;
@@ -48,7 +46,6 @@ declare const _default: import("vue").DefineComponent<__VLS_WithDefaults<__VLS_T
     skeletonColor?: string | undefined;
     interact?: boolean | Ref<boolean> | undefined;
     fade?: boolean | Ref<boolean> | undefined;
-    fadeDuration?: number | undefined;
 }>, {
     lineWidth: number;
     lineCap: string;
@@ -62,7 +59,6 @@ declare const _default: import("vue").DefineComponent<__VLS_WithDefaults<__VLS_T
     skeletonColor: string;
     interact: boolean;
     fade: boolean;
-    fadeDuration: number;
 }>>> & {
     onOnInit?: ((...args: any[]) => any) | undefined;
     onOnFetched?: ((...args: any[]) => any) | undefined;
@@ -84,7 +80,6 @@ declare const _default: import("vue").DefineComponent<__VLS_WithDefaults<__VLS_T
     skeletonColor: string;
     interact: boolean | Ref<boolean>;
     fade: boolean | Ref<boolean>;
-    fadeDuration: number;
 }>;
 export default _default;
 type __VLS_NonUndefinedable<T> = T extends undefined ? never : T;
