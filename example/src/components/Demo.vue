@@ -18,7 +18,7 @@ import ReplayIcon from './icons/Replay.vue'
 
 const darkMode = useDark()
 
-const props = defineProps(['id', 'url', 'interact', 'skeleton', 'lazy', 'fade'])
+const props = defineProps(['url', 'interact', 'skeleton', 'lazy', 'fade'])
 
 const waveOptions = reactive<IllestWaveformProps>({
   url: props.url,
@@ -78,7 +78,6 @@ const clickHandler = (el: Ref<HTMLElement>) => {
 }
 
 const play = () => {
-  emits('play', props.id)
   waveformRef.value!.play()
 }
 
@@ -101,14 +100,6 @@ const getDuration = () => {
   const duration = waveformRef.value!.getDuration()
   durationTime.value = duration
 }
-
-const emits = defineEmits(['play'])
-
-defineExpose({
-  pause,
-  playing,
-  id: props.id,
-})
 </script>
 
 <template>

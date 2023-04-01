@@ -66,6 +66,8 @@ onUnmounted(() => {
       __illestWaveformRef__.value as HTMLElement,
       lazyLoadHandler
     )
+
+  audioController && audioController.pause()
 })
 
 function lazyLoadHandler() {

@@ -53,15 +53,10 @@ const items = reactive<Props[]>([
   },
 ])
 
-const solo = useStorage('solo', true)
 const skeleton = useStorage('skeleton', true)
 const interact = useStorage('interact', true)
 const lazy = useStorage('lazy', true)
 const fade = useStorage('fade', true)
-
-const toggleMono = () => {
-  solo.value = !solo.value
-}
 
 const toggleInteract = () => {
   interact.value = !interact.value
@@ -77,15 +72,6 @@ const toggleLazy = () => {
 
 const toggleFade = () => {
   fade.value = !fade.value
-}
-
-const childs = reactive<(typeof Demo)[]>([])
-
-const playHandler = (id: string) => {
-  if (!solo.value) return
-  childs.forEach((child) => {
-    if (child.id !== id && child.playing) child.pause()
-  })
 }
 </script>
 
@@ -106,11 +92,6 @@ const playHandler = (id: string) => {
     </button>
 
     <div class="mb-8 flex">
-      <button @click="toggleMono()">
-        <span :class="{ 'bg-green-500': solo }" />
-        <div>solo</div>
-      </button>
-
       <button @click="toggleInteract()">
         <span :class="{ 'bg-green-500': interact }" />
         <div>interact</div>
@@ -134,15 +115,12 @@ const playHandler = (id: string) => {
 
     <Demo
       v-for="item in items"
-      :id="item.id"
-      ref="childs"
       :key="item.id"
       :url="item.url"
       :interact="interact"
       :skeleton="skeleton"
       :lazy="lazy"
       :fade="fade"
-      @play="playHandler"
     />
   </section>
 </template>
