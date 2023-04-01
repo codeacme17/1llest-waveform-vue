@@ -14,7 +14,6 @@ export default class WebAudioController extends WebAudio {
   private pickAt: number
   private playing: boolean
   private audioBufferSourceNode!: AudioBufferSourceNode | null
-  private FADE_OUT_TIME: number
 
   constructor(props: IllestWaveformProps) {
     super(props)
@@ -22,7 +21,6 @@ export default class WebAudioController extends WebAudio {
     this.pauseAt = 0
     this.pickAt = 0
     this.playing = false
-    this.FADE_OUT_TIME = 0.2
   }
 
   get _playing(): boolean {
@@ -46,11 +44,12 @@ export default class WebAudioController extends WebAudio {
     this.pauseAt = 0
     this.playing = true
 
-    this.gainNode.gain.setValueAtTime(0, this.audioCtx.currentTime)
-    this.gainNode.gain.linearRampToValueAtTime(
-      1,
-      this.audioCtx.currentTime + this.FADE_OUT_TIME
-    )
+    if (!this.props.fade) {
+      this.setGainValue(1)
+      return
+    }
+    this.setGainValue(0)
+    this.setGainLinearRamp(1)
   }
 
   public pause(): void {
@@ -60,10 +59,9 @@ export default class WebAudioController extends WebAudio {
     this.initializeState()
 
     this.pauseAt = elapsed
-    this.gainNode.gain.linearRampToValueAtTime(
-      0,
-      this.audioCtx.currentTime + this.FADE_OUT_TIME
-    )
+
+    if (!this.props.fade) return
+    this.setGainLinearRamp(0)
   }
 
   public pick(pickedTime: number): void {
@@ -100,16 +98,27 @@ export default class WebAudioController extends WebAudio {
     this.audioBufferSourceNode.buffer = this.audioBuffer
   }
 
-  protected connectDestination(): void {
+  private connectDestination(): void {
     if (!this.audioBufferSourceNode) return
     this.audioBufferSourceNode.connect(this.gainNode)
     this.gainNode.connect(this.audioCtx.destination)
   }
 
-  protected disconnectDestination(): void {
+  private disconnectDestination(): void {
     if (!this.audioBufferSourceNode) return
     this.audioBufferSourceNode.disconnect()
     this.audioBufferSourceNode.stop()
     this.audioBufferSourceNode = null
+  }
+
+  private setGainValue(v: number): void {
+    this.gainNode.gain.setValueAtTime(v, this.audioCtx.currentTime)
+  }
+
+  private setGainLinearRamp(v: number): void {
+    this.gainNode.gain.linearRampToValueAtTime(
+      v,
+      this.audioCtx.currentTime + this.props.fadeDuration!
+    )
   }
 }

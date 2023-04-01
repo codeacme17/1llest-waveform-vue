@@ -24,6 +24,8 @@ type IllestWaveformProps = {
   skeleton?: boolean | Ref<boolean>
   skeletonColor?: string
   interact?: boolean | Ref<boolean>
+  fade?: boolean | Ref<boolean>
+  fadeDuration?: number
 }
 
 const props = withDefaults(defineProps<IllestWaveformProps>(), {
@@ -38,6 +40,8 @@ const props = withDefaults(defineProps<IllestWaveformProps>(), {
   skeleton: true,
   skeletonColor: '#232323',
   interact: true,
+  fade: true,
+  fadeDuration: 0.2,
 })
 
 // Render trigger can control the render time

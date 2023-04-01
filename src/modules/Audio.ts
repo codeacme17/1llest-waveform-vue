@@ -10,9 +10,9 @@ export default class WebAudio {
   protected props: IllestWaveformProps
   protected audioCtx: AudioContext
   protected audioBuffer!: AudioBuffer
+  protected gainNode!: GainNode
   private filteredData!: number[]
   private arrayBuffer!: ArrayBuffer
-  protected gainNode!: GainNode
 
   constructor(props: IllestWaveformProps) {
     this.props = props
