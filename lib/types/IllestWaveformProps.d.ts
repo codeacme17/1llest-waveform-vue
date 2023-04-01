@@ -1,7 +1,5 @@
 import type { Ref } from 'vue'
 
-type CanvasLineCap = 'butt' | 'round' | 'square'
-
 type IllestWaveformProps = {
   url: string
   lineWidth?: number
@@ -15,6 +13,8 @@ type IllestWaveformProps = {
   skeleton?: boolean | Ref<boolean>
   skeletonColor?: string
   interact?: boolean | Ref<boolean>
+  fade?: boolean | Ref<boolean>
+  fadeDuration?: number
 }
 
 export default IllestWaveformProps
