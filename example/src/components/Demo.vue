@@ -18,13 +18,14 @@ import ReplayIcon from './icons/Replay.vue'
 
 const darkMode = useDark()
 
-const props = defineProps(['url', 'interact', 'skeleton', 'lazy', 'id'])
+const props = defineProps(['id', 'url', 'interact', 'skeleton', 'lazy', 'fade'])
 
 const waveOptions = reactive<IllestWaveformProps>({
   url: props.url,
   interact: computed(() => props.interact),
   skeleton: computed(() => props.skeleton),
   lazy: computed(() => props.lazy),
+  fade: computed(() => props.fade),
 })
 
 watchEffect(() => {

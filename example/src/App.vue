@@ -57,6 +57,7 @@ const solo = useStorage('solo', true)
 const skeleton = useStorage('skeleton', true)
 const interact = useStorage('interact', true)
 const lazy = useStorage('lazy', true)
+const fade = useStorage('fade', true)
 
 const toggleMono = () => {
   solo.value = !solo.value
@@ -72,6 +73,10 @@ const toggleSkeleton = () => {
 
 const toggleLazy = () => {
   lazy.value = !lazy.value
+}
+
+const toggleFade = () => {
+  fade.value = !fade.value
 }
 
 const childs = reactive<(typeof Demo)[]>([])
@@ -94,13 +99,13 @@ const playHandler = (id: string) => {
       </span>
     </h1>
 
-    <div class="mb-8 flex">
-      <button @click="toggleDark()">
-        <SunIcon v-show="!isDark" class="w-5" />
-        <MoonIcon v-show="isDark" class="w-5" />
-        <div>{{ isDark ? 'dark' : 'light' }}</div>
-      </button>
+    <button class="mb-3" @click="toggleDark()">
+      <SunIcon v-show="!isDark" class="w-5" />
+      <MoonIcon v-show="isDark" class="w-5" />
+      <div>{{ isDark ? 'dark' : 'light' }}</div>
+    </button>
 
+    <div class="mb-8 flex">
       <button @click="toggleMono()">
         <span :class="{ 'bg-green-500': solo }" />
         <div>solo</div>
@@ -120,6 +125,11 @@ const playHandler = (id: string) => {
         <span :class="{ 'bg-green-500': lazy }" />
         <div>lazy</div>
       </button>
+
+      <button @click="toggleFade()">
+        <span :class="{ 'bg-green-500': fade }" />
+        <div>fade</div>
+      </button>
     </div>
 
     <Demo
@@ -131,6 +141,7 @@ const playHandler = (id: string) => {
       :interact="interact"
       :skeleton="skeleton"
       :lazy="lazy"
+      :fade="fade"
       @play="playHandler"
     />
   </section>
