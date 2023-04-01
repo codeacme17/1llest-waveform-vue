@@ -1,5 +1,6 @@
 import WebAudio from './Audio'
 import type { IllestWaveformProps } from '../types/waveform'
+import timeCounter from '../utils/time-counter'
 
 /**
  *  WebAudioController Class creates construct,
@@ -14,6 +15,7 @@ export default class WebAudioController extends WebAudio {
   private pickAt: number
   private playing: boolean
   private audioBufferSourceNode!: AudioBufferSourceNode | null
+  private FADE_DURATION: number
 
   constructor(props: IllestWaveformProps) {
     super(props)
@@ -21,6 +23,7 @@ export default class WebAudioController extends WebAudio {
     this.pauseAt = 0
     this.pickAt = 0
     this.playing = false
+    this.FADE_DURATION = this.props.fade ? 0.08 : 0
   }
 
   get _playing(): boolean {
@@ -46,22 +49,23 @@ export default class WebAudioController extends WebAudio {
 
     if (!this.props.fade) {
       this.setGainValue(1)
-      return
+    } else {
+      this.setGainValue(0)
+      this.setGainLinearRamp(1)
     }
-    this.setGainValue(0)
-    this.setGainLinearRamp(1)
   }
 
-  public pause(): void {
+  public async pause(): Promise<void> {
     const elapsed = this.audioCtx.currentTime - this.startAt
+
+    if (this.props.fade) {
+      this.setGainLinearRamp(0)
+      await timeCounter(this.FADE_DURATION * 1000)
+    }
 
     this.disconnectDestination()
     this.initializeState()
-
-    this.pauseAt = elapsed
-
-    if (!this.props.fade) return
-    this.setGainLinearRamp(0)
+    this.pauseAt = elapsed + this.FADE_DURATION
   }
 
   public pick(pickedTime: number): void {
@@ -118,7 +122,7 @@ export default class WebAudioController extends WebAudio {
   private setGainLinearRamp(v: number): void {
     this.gainNode.gain.linearRampToValueAtTime(
       v,
-      this.audioCtx.currentTime + this.props.fadeDuration!
+      this.audioCtx.currentTime + this.FADE_DURATION!
     )
   }
 }
