@@ -3,11 +3,7 @@ import { ref, onMounted, watchEffect, onUnmounted } from 'vue'
 import type { Ref } from 'vue'
 import { Wave, AudioController } from '../modules'
 import { formatSecond } from '../utils/format-time'
-import {
-  lazyLoader,
-  registerScrollHander,
-  canelScrollHander,
-} from '../utils/lazy-load'
+import { lazyLoader, unobserve } from '../utils/lazy-load'
 
 type CanvasLineCap = 'butt' | 'round' | 'square'
 
@@ -50,10 +46,6 @@ const __illestWaveformRef__ = ref<HTMLElement | null>(null)
 onMounted(async () => {
   if (props.lazy) {
     lazyLoader(__illestWaveformRef__.value as HTMLElement, lazyLoadHandler)
-    registerScrollHander(
-      __illestWaveformRef__.value as HTMLElement,
-      lazyLoadHandler
-    )
     watchEffect(async () => {
       if (renderTrigger.value) await init()
     })
@@ -61,12 +53,7 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {
-  if (props.lazy)
-    canelScrollHander(
-      __illestWaveformRef__.value as HTMLElement,
-      lazyLoadHandler
-    )
-
+  if (props.lazy) unobserve()
   audioController && audioController.pause()
 })
 

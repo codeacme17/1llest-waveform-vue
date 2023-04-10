@@ -1,40 +1,39 @@
-// Registers a scroll event listener on the document that checks if the given
-// element is in view and calls the provided handler if it is.
-function registerScrollHander(el: HTMLElement, handler: () => void) {
-  const throttledHandler = throttle(() => lazyLoader(el, handler), 500)
-  document.addEventListener('scroll', () => throttledHandler())
-}
+class LazyLoader {
+  private el: HTMLElement
+  private handler: () => void
+  private intersectionObserver!: IntersectionObserver
 
-// Removes the scroll event listener on the document that was previously added
-// with registerScrollHandler.
-function canelScrollHander(el: HTMLElement, handler: () => void) {
-  document.removeEventListener('scroll', () => lazyLoader(el, handler))
-}
+  constructor(el: HTMLElement, handler: () => void) {
+    this.el = el
+    this.handler = handler
+  }
 
-// Checks if the given element is in view, and if it is, calls the provided handler.
-function lazyLoader(el: HTMLElement, handler: () => void): void {
-  const windowHeight: number = window.innerHeight
-  const windowOffY: number = window.scrollY
-  const elDistanceToTop: number =
-    window.pageYOffset + el.getBoundingClientRect().top
+  public observe() {
+    const { el, handler } = this
 
-  if (
-    elDistanceToTop >= windowOffY - windowHeight / 4 &&
-    elDistanceToTop - windowOffY - windowHeight < windowHeight / 4
-  )
-    handler()
-}
+    const cb = (entries: IntersectionObserverEntry[]) => {
+      const entry = entries[0]
+      if (entry.intersectionRatio > 0) handler()
+    }
 
-// Throttle function that delays the execution of the given function until a certain time has passed since the last time it was called.
-function throttle(func: () => void, delay: number): () => void {
-  let timeout: NodeJS.Timeout | undefined
-  return () => {
-    if (!timeout)
-      timeout = setTimeout(() => {
-        func()
-        timeout = undefined
-      }, delay)
+    this.intersectionObserver = new IntersectionObserver(cb)
+    this.intersectionObserver.observe(el)
+  }
+
+  public unobserve() {
+    this.intersectionObserver.unobserve(this.el)
   }
 }
 
-export { registerScrollHander, canelScrollHander, lazyLoader }
+let lz: LazyLoader
+
+function lazyLoader(el: HTMLElement, handler: () => void) {
+  lz = new LazyLoader(el, handler)
+  lz.observe()
+}
+
+function unobserve() {
+  lz.unobserve()
+}
+
+export { lazyLoader, unobserve }
