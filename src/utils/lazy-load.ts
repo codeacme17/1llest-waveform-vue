@@ -17,13 +17,12 @@ class LazyLoader {
       if (this.rended) return this.unobserve()
 
       const entry = entries[0]
-
-      if (entry.intersectionRatio > 0) {
+      const DELAY_TIME = 260
+      if (entry.intersectionRatio >= 0) {
         this.timer = setTimeout(() => {
           this.handler()
           this.rended = true
-          console.log(this.rended)
-        }, 260)
+        }, DELAY_TIME)
       } else {
         if (this.timer) {
           clearTimeout(this.timer)
