@@ -19,7 +19,7 @@ class LazyLoader {
       const entry = entries[0]
       const DELAY_TIME = 260
 
-      if (entry.intersectionRatio >= 0) {
+      if (entry.intersectionRatio > 0) {
         this.timer = setTimeout(() => {
           this.handler()
           this.rended = true
