@@ -9,15 +9,13 @@ class LazyLoader {
   }
 
   public observe() {
-    const { el, handler } = this
-
     const cb = (entries: IntersectionObserverEntry[]) => {
       const entry = entries[0]
-      if (entry.intersectionRatio > 0) handler()
+      if (entry.intersectionRatio > 0) this.handler()
     }
 
     this.intersectionObserver = new IntersectionObserver(cb)
-    this.intersectionObserver.observe(el)
+    this.intersectionObserver.observe(this.el)
   }
 
   public unobserve() {
