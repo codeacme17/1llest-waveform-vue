@@ -2,16 +2,34 @@ class LazyLoader {
   private el: HTMLElement
   private handler: () => void
   private intersectionObserver!: IntersectionObserver
+  private timer: NodeJS.Timeout | null
+  private rended: boolean
 
   constructor(el: HTMLElement, handler: () => void) {
     this.el = el
     this.handler = handler
+    this.timer = null
+    this.rended = false
   }
 
   public observe() {
     const cb = (entries: IntersectionObserverEntry[]) => {
+      if (this.rended) return this.unobserve()
+
       const entry = entries[0]
-      if (entry.intersectionRatio > 0) this.handler()
+
+      if (entry.intersectionRatio > 0) {
+        this.timer = setTimeout(() => {
+          this.handler()
+          this.rended = true
+          console.log(this.rended)
+        }, 260)
+      } else {
+        if (this.timer) {
+          clearTimeout(this.timer)
+          this.timer = null
+        }
+      }
     }
 
     this.intersectionObserver = new IntersectionObserver(cb)
