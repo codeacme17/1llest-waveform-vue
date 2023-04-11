@@ -27,7 +27,7 @@
       "import": "./lib/1llest-waveform-vue.mjs",
       "require": "./lib/1llest-waveform-vue.umd.js"
     },
-    "./dist/style.css": "./lib/style.css"
+    "./lib/style.css": "./lib/style.css"
   },
   "scripts": {
     "build": "vite build --outDir lib",
