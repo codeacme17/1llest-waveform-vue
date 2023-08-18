@@ -16,11 +16,18 @@
 </p>
 
 
+
 ## Description
+<p> 
+  
+  English ｜ [简写中文](docs/cn-readme.md) 
+  
+</p>
 
 This component is written using the native  [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API), and does not use any dependencies other than vue3 in the production environment. Of course, this means: if your target browser does not support the features of the web audio api, then my Plugins will also not apply. You can go to  [Browser compatibility](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API#audiocontext_2)  to see the `AudioContext` line to check whether it is compatible with the target browser
 
 **Example** - [Live Demo](https://codeacme17.github.io/1llest-waveform-vue/)
+
 
 ## Start
 ### Install
