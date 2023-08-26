@@ -11,7 +11,7 @@
 
 <p align="center">
   <samp>
-    一款轻量可控的 Vue3 音频播放插件
+    一款轻量可视的 Vue3 音频播放插件
   </samp>
 </p>
 
