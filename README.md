@@ -14,8 +14,7 @@
     A lightweight and controllable audio visualization vue3 plugin
   </samp>
 </p>
-
-
+<br />
 
 ## Description
 <p> 
