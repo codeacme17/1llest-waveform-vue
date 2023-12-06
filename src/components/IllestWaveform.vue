@@ -9,6 +9,7 @@ type CanvasLineCap = 'butt' | 'round' | 'square'
 
 type IllestWaveformProps = {
   url: string
+  // eslint-disable-next-line no-undef
   requestOptions?: RequestInit
   lineWidth?: number
   lineCap?: CanvasLineCap
