@@ -7,4 +7,5 @@ export default {
   },
 }
 
+export type { IllestWaveformProps } from './types/waveform'
 export { IllestWaveform }

@@ -9,6 +9,7 @@ type CanvasLineCap = 'butt' | 'round' | 'square'
 
 type IllestWaveformProps = {
   url: string
+  requestOptions?: RequestInit
   lineWidth?: number
   lineCap?: CanvasLineCap
   lineColor?: string
@@ -24,6 +25,7 @@ type IllestWaveformProps = {
 }
 
 const props = withDefaults(defineProps<IllestWaveformProps>(), {
+  requestOptions: () => ({}),
   lineWidth: 0.5,
   lineCap: 'round',
   lineColor: '#5e5e5e',
