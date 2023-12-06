@@ -21,7 +21,7 @@
   ],
   "main": "./lib/1llest-waveform-vue.umd.js",
   "module": "./lib/1llest-waveform-vue.mjs",
-  "types": "./lib/index.d.ts",
+  "types": "./lib/types/index.d.ts",
   "exports": {
     ".": {
       "import": "./lib/1llest-waveform-vue.mjs",

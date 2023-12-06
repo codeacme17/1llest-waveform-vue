@@ -1,5 +1,7 @@
 import type { Ref } from 'vue'
 
+type CanvasLineCap = 'butt' | 'round' | 'square'
+
 export type IllestWaveformProps = {
   url: string
   requestOptions?: RequestInit
