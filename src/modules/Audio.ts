@@ -37,7 +37,7 @@ export default class WebAudio {
 
   public async fetchAudioFile(): Promise<void> {
     try {
-      const response = await fetch(this.props.url)
+      const response = await fetch(this.props.url, this.props.requestOptions)
       this.arrayBuffer = await response.arrayBuffer()
     } catch (error) {
       console.error(error)

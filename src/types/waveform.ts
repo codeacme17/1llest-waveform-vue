@@ -2,6 +2,7 @@ import type { Ref } from 'vue'
 
 export type IllestWaveformProps = {
   url: string
+  requestOptions?: RequestInit
   lineWidth?: number
   lineCap?: CanvasLineCap
   lineColor?: string
